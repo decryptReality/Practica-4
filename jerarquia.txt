@@ -1,0 +1,69 @@
+
+entregar
+    diagrama clases
+    documentos de ayuda
+    repositorio, 20 commits
+    documento pdf
+reglas
+    utilizar
+        herencia
+        polimorfismo
+        interfaces
+        arraylist (opcional)
+juego
+    archivo
+        texto, lectura
+            tablero
+                tablero(fila,columna)
+                pierdeturno(fila,columna)
+                tiradados(fila,columna)
+                avanza(fila,columna)
+                retrocede(fila,columna)
+                subida(filaIncial,columnaInicial,filaFinal,columnaFinal)
+                bajada(filaIncial,columnaInicial,filaFinal,columnaFinal)
+        binario, lectura y escritura
+            jugador
+                id
+                nombre
+                apellido
+                partidas
+                    jugadas
+                    ganadas
+                    perdidas
+        lectura
+            ignorar linea erronea
+    partida
+        turnos
+            orden aleatorio
+            avanza por dado
+            mostrar casillas avanzadas y sus penalizaciones
+        tablero
+            ficha de jugador con color unico
+            tiempo transcurrido
+    reporte
+        informacion de jugadores 
+
+        
+menu
+    jugar
+        tablero
+            seleccionar archivo TXT
+        jugadores
+            seleccionar jugadores
+        partida
+            gui
+                tablero
+                reloj
+                fichas
+            turno
+                dado
+                mensaje de casillas
+                    avanzadas
+                    penalizaciones
+    jugadores
+        subir archivo DAT
+        guardar 
+    reporte
+
+
+

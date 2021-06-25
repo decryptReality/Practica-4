@@ -17,8 +17,8 @@ juego
                 tablero(fila,columna)
                 pierdeturno(fila,columna)
                 tiradados(fila,columna)
-                avanza(fila,columna)
-                retrocede(fila,columna)
+                avanza(fila,columna,posiciones)
+                retrocede(fila,columna,posiciones)
                 subida(filaIncial,columnaInicial,filaFinal,columnaFinal)
                 bajada(filaIncial,columnaInicial,filaFinal,columnaFinal)
         binario, lectura y escritura
@@ -49,7 +49,7 @@ menu
         tablero
             seleccionar archivo TXT
         jugadores
-            seleccionar jugadores
+            seleccionar jugadores en [1,6]
         partida
             gui
                 tablero
@@ -66,4 +66,15 @@ menu
     reporte
 
 
-
+escritura
+    tablero
+        celdas
+            tipos
+                pierdeturno
+                tiradados
+                avanza
+                retrocede
+                subida
+                bajada
+        manejador de turnos
+        manejador de posiciones

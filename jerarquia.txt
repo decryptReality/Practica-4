@@ -76,5 +76,7 @@ escritura
                 retrocede
                 subida
                 bajada
-        manejador de turnos
-        manejador de posiciones
+        manejador de 
+            turnos
+            posiciones
+            tipo de casilla

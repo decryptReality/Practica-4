@@ -5,6 +5,7 @@ import tablero.Celda;
 // celda A-vanzar
 public class CeldaA extends Celda
 {
+
     // celdas que avanza
     int cel;
 
@@ -13,5 +14,8 @@ public class CeldaA extends Celda
         super(fil, col);
         this.cel = cel;
     }
-    
+        
+    public int getCel() {
+        return cel;
+    }
 }

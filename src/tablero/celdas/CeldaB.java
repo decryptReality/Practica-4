@@ -14,6 +14,14 @@ public class CeldaB extends Celda
         super(fil, col);
         this.filB = filB;
         this.colB = colB;
-    }    
+    }
+
+    public int getFilB() {
+        return filB;
+    }
+
+    public int getColB() {
+        return colB;
+    }
     
 }

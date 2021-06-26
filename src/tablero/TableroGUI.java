@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import jcomponents.JButton1;
 import jcomponents.JFrame1;
+import tablero.celdas.*;
 
 public class TableroGUI 
 {
@@ -16,6 +17,36 @@ public class TableroGUI
 
     public static void main(String[] args) 
     {
+    }
+
+    void verificar(int fil, int col)
+    {
+        Celda cel = aCeldas[fil][col];
+        if(cel instanceof CeldaA)
+        {
+            
+
+        }
+        if(cel instanceof CeldaB)
+        {
+            
+        }
+        if(cel instanceof CeldaD)
+        {
+            
+        }
+        if(cel instanceof CeldaP)
+        {
+            
+        }
+        if(cel instanceof CeldaR)
+        {
+            
+        }
+        if(cel instanceof CeldaS)
+        {
+            
+        }
     }
 
     // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero

@@ -14,4 +14,7 @@ public class CeldaR extends Celda
         this.cel = cel;
     }
 
+    public int getCel() {
+        return cel;
+    }
 }

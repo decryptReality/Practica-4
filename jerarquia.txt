@@ -82,3 +82,40 @@ escritura
             turnos
             posiciones
             tipo de casilla
+
+SI hay varios jugadores en una misma casilla
+	PARA turno actual
+		pintar casilla destino del color de su ficha
+		pintar casilla origen del color de la ficha del jugador con proximo turno
+		
+
+L O G I C A  D E  P R O G R A M A
+
+TODAS las celdas tienen habilidad de cambiar de color
+presionar un boton/celda del tablero 
+    UNICAMENTE da informacion de jugadores que se encuentran alli
+
+jugador: tira dados
+programa: muestra destino y penalizaciones
+jugador: ok
+programa: cambia color de ficha en celdas
+
+array de
+    celdas
+        contiene objetos celda y sus diferentes subtipos
+        verificar si celda destino tiene alguna penalizacion
+            usar instanceof para conocer SI celda destino es subtipo de celda
+                SI asi es, aplicar penalizaciones
+    botones
+        contiene objetos jbutton
+        cambiar el color del boton al de la ficha de algun jugador
+        puede tener imagen o figura
+    turnos
+        contien objetos turno
+        representa el orden de los turnos
+        Clase Turno contiene
+            color ficha
+            jugador
+            celda actual
+            penalizaciones
+                perder turno: usar if(pierdeTurno){continue}

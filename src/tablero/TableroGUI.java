@@ -23,10 +23,10 @@ public class TableroGUI
         {
             for(int j = 0; j < cols; j = j + 1)
             {
-                botones[i][j] = new JButton1(i + "," + j, 70, 70);
+                botones[i][j] = new JButton1(i + "," + j, 30, 30);
                 botones[i][j].setBackground(new Color(238,238,238));
                 botones[i][j].setMargin(new Insets(1, 1, 1, 1));
-                //botones[i][j].setBorderPainted(false);
+                // botones[i][j].setBorderPainted(false);
                 pGrid.add(botones[i][j]);
             }    
         }

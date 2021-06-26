@@ -2,9 +2,6 @@ package tablero;
 
 import java.util.ArrayList;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class Tablero 
 {
     // dimensiones del tablero

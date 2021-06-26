@@ -2,7 +2,6 @@ package tablero.celdas;
 
 public class Celda 
 {
-
     // variables de posicion inicial en tablero
     private int fil;
     private int col;

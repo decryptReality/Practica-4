@@ -60,6 +60,8 @@ menu
                 mensaje de casillas
                     avanzadas
                     penalizaciones
+            fin
+                guardar binarios de jugadores
     jugadores
         subir archivo DAT
         guardar 

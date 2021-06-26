@@ -1,8 +1,9 @@
 package tablero;
 
 import java.util.ArrayList;
-
 import tablero.celdas.Celda;
+import javax.swing.*;
+import java.awt.*;
 
 public class Tablero 
 {

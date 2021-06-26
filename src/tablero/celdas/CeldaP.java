@@ -1,5 +1,7 @@
 package tablero.celdas;
 
+import tablero.Celda;
+
 // cela P-erder
 public class CeldaP extends Celda
 {

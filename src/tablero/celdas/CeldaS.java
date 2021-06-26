@@ -1,5 +1,7 @@
 package tablero.celdas;
 
+import tablero.Celda;
+
 // celda S-ubir
 public class CeldaS extends Celda
 {

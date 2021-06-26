@@ -1,18 +1,50 @@
 package tablero;
 
-import jcomponents.*;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+
+import jcomponents.JButton1;
+import jcomponents.JFrame1;
 
 public class TableroGUI 
 {
-    public static void main(String[] args) {
-        tableroUI(3, 5);
+    Celda[][] celdas;
+    JButton1[][] botones;
+    ArrayList<Turno> alTurnos;
+
+    public static void main(String[] args) 
+    {
     }
 
-    static void tableroUI(int fils, int cols)
+    // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
+    TableroGUI(int fils, int cols, ArrayList<Celda> alCeldas)
     {
-        JButton1[][] botones = new JButton1[fils][cols];
+        celdas = new Celda[fils][cols];
+        botones = new JButton1[fils][cols];    
+
+        for(int i = 0; i < fils; i = i + 1)
+        {
+            for(int j = 0; j < cols; j = j + 1)
+            {
+                celdas[i][j] = new Celda(i, j);
+            }    
+        }
+
+        for(Celda celda : alCeldas)
+        {
+            int i = celda.getFil();
+            int j = celda.getCol();
+            celdas[i][j] = celda;
+        }
+
+    }
+
+    void tableroUI(int fils, int cols)
+    {
         JPanel pGrid = new JPanel();
 
         //JPanel1 pGrid = new JPanel1(300, 300);

@@ -1,5 +1,7 @@
 package tablero.celdas;
 
+import tablero.Celda;
+
 // celda A-vanzar
 public class CeldaA extends Celda
 {

@@ -1,4 +1,4 @@
-package tablero.celdas;
+package tablero;
 
 public class Celda 
 {

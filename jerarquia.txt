@@ -43,7 +43,8 @@ juego
     reporte
         informacion de jugadores 
 
-        
+L O G I C A  D E  P R O G R A M A
+
 menu
     jugar
         tablero
@@ -67,7 +68,6 @@ menu
         guardar 
     reporte
 
-
 escritura
     tablero
         celdas
@@ -87,9 +87,6 @@ SI hay varios jugadores en una misma casilla
 	PARA turno actual
 		pintar casilla destino del color de su ficha
 		pintar casilla origen del color de la ficha del jugador con proximo turno
-		
-
-L O G I C A  D E  P R O G R A M A
 
 TODAS las celdas tienen habilidad de cambiar de color
 presionar un boton/celda del tablero 

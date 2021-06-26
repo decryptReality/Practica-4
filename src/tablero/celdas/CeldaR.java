@@ -1,5 +1,7 @@
 package tablero.celdas;
 
+import tablero.Celda;
+
 // celda R-etroceder
 public class CeldaR extends Celda
 {

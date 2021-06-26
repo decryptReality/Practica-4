@@ -4,9 +4,9 @@ import java.awt.*;
 import java.io.File;
 import javax.swing.JFileChooser;
 
-class JFileChooser1 extends JFileChooser
+public class JFileChooser1 extends JFileChooser
 {
-    File getDirectory(Component parent)
+    public File getDirectory(Component parent)
     {
         setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         setMultiSelectionEnabled(false);
@@ -19,7 +19,7 @@ class JFileChooser1 extends JFileChooser
         return null;
     }
 
-    File[] getDirectories(Component parent)
+    public File[] getDirectories(Component parent)
     {
         setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         setMultiSelectionEnabled(true);
@@ -32,7 +32,7 @@ class JFileChooser1 extends JFileChooser
         return null;
     }
 
-    File getFile(Component parent)
+    public File getFile(Component parent)
     {
         setFileSelectionMode(JFileChooser.FILES_ONLY);
         setMultiSelectionEnabled(false);
@@ -45,7 +45,7 @@ class JFileChooser1 extends JFileChooser
         return null;
     }
 
-    File[] getFiles(Component parent)
+    public File[] getFiles(Component parent)
     {
         setFileSelectionMode(JFileChooser.FILES_ONLY);
         setMultiSelectionEnabled(true);
@@ -58,7 +58,7 @@ class JFileChooser1 extends JFileChooser
         return null;
     }
 
-    void setFilter(String description, String[] extensions, boolean hasDot)
+    public void setFilter(String description, String[] extensions, boolean hasDot)
     {
         setFileFilter(new FileFilter_1(description, extensions, hasDot));
     }

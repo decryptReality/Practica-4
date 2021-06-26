@@ -3,20 +3,20 @@ package jcomponents;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
-class FileFilter_1 extends FileFilter
+public class FileFilter_1 extends FileFilter
 {
     String[] extensions;
     String description;
     boolean hasDot;
 
-    FileFilter_1(String description, String[] extensions, boolean hasDot)
+    public FileFilter_1(String description, String[] extensions, boolean hasDot)
     {
         this.extensions = extensions;
         this.description = description;
         this.hasDot = hasDot;
     }
 
-    String extension(int index)
+    public String extension(int index)
     {
         if (hasDot)
         {

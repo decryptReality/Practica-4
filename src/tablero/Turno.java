@@ -9,7 +9,8 @@ public class Turno
     Celda celda;
     // color de ficha
     Color color;
-    boolean pierdeTurno;
+    boolean perdioTurno;
+    boolean ganoTurno;
 
     public Turno(Jugador jugador, Celda celda, Color cFicha) 
     {
@@ -18,27 +19,44 @@ public class Turno
         this.color = cFicha;
     }
 
-    public void setCelda(Celda celda) {
-        this.celda = celda;
-    }
-
-    public boolean getPierdeTurno() {
-        return pierdeTurno;
-    }
-
-    public void setPierdeTurno(boolean pierdeTurno) {
-        this.pierdeTurno = pierdeTurno;
-    }
-
     public Jugador getJugador() {
         return jugador;
+    }
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
     }
 
     public Celda getCelda() {
         return celda;
     }
 
+    public void setCelda(Celda celda) {
+        this.celda = celda;
+    }
+
     public Color getColor() {
         return color;
-    }    
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public boolean getPerdioTurno() {
+        return perdioTurno;
+    }
+
+    public void setPerdioTurno(boolean perdioTurno) {
+        this.perdioTurno = perdioTurno;
+    }
+
+    public boolean getGanoTurno() {
+        return ganoTurno;
+    }
+
+    public void setGanoTurno(boolean ganoTurno) {
+        this.ganoTurno = ganoTurno;
+    }
+
 }

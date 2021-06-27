@@ -20,32 +20,35 @@ public class TableroGUI
     {
     }
 
-
-
-    void mensajeTurno(Turno tur)
+    void manejarTurno(Turno tur)
     {
-        if(!tur.getPierdeTurno())
+        if(!tur.getPerdioTurno())
         {
             int cels1 = Extras.dado(1, 6);
             int cels2 = Extras.dado(1, 6);
             tirarDados(cels1, cels2);
             // des-tino de ficha despues de tirar dados
             Celda des1 = destino1(cels1 + cels2, tur.getCelda());
+            cambiarColor(des1, tur.getColor());
             // des-tino de ficha si des1 mueve la ficha
             Celda des2 = destino2(des1, tur);
-            tur.setCelda(des2);
+            cambiarColor(des1);
             cambiarColor(des2, tur.getColor());
+            if(tur.getGanoTurno())
+            {
+                tur.setGanoTurno(false);
+                manejarTurno(tur);
+            }
         }
         else
         {
-            tur.setPierdeTurno(false);
+            tur.setPerdioTurno(false);
         }
         // dependiendo si !pierdeTurno hacer
         // se muestra tirar dados
         // devolver celda destino
-        // mostrar condicion de celda, si tiene
+        // mostrar destino 2, si hay
         // si condicion es repetir turno, volver a tirar dados
-
     }
 
     void tirarDados(int cels1, int cels2)
@@ -142,10 +145,12 @@ public class TableroGUI
         }
         if(celB instanceof CeldaD)
         {
-            mensaje = "[!] GANO UN TURNO MAS, A TIRAR LOS DADOS";
+            tur.setGanoTurno(true);
+            mensaje = "[!] GANO UN TURNO MAS";
         }
         if(celB instanceof CeldaP)
         {
+            tur.setPerdioTurno(true);
             mensaje = "[!] PERDIO EL SIGUIENTE TURNO";
         }
         tur.setCelda(celB);
@@ -170,6 +175,12 @@ public class TableroGUI
     {
         aBotones[cel.getFil()][cel.getCol()].setBackground(bg);
     }
+    void cambiarColor(Celda cel)
+    {
+        aBotones[cel.getFil()][cel.getCol()].setBackground(new Color(238, 238, 238));
+    }
+
+
 
     // hacer metodo presionar boton que se active y desactive segun el contexto
     // y que devuelva una celda

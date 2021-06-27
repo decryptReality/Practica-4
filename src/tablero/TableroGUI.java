@@ -24,14 +24,21 @@ public class TableroGUI
     {
         if(!tur.getPerdioTurno())
         {
+            // cambiamos color de celda actual
+            cambiarColor(tur.getCelda(), tur.getColor());
+            // mostramos el resultado de los dados
             int cels1 = Extras.dado(1, 6);
             int cels2 = Extras.dado(1, 6);
-            tirarDados(cels1, cels2);
+            mensajeDados(cels1, cels2);
             // des-tino de ficha despues de tirar dados
             Celda des1 = destino1(cels1 + cels2, tur.getCelda());
+            // despintamos la celda anterior y pintamos des1
+            cambiarColor(tur.getCelda());
             cambiarColor(des1, tur.getColor());
-            // des-tino de ficha si des1 mueve la ficha
+            // des-tino-2 de ficha SI des1 mueve la ficha
+            // aqui ajustamos nuevo valor en tur.setCelda(des2)
             Celda des2 = destino2(des1, tur);
+            // despintamos des1 y pintamos des2
             cambiarColor(des1);
             cambiarColor(des2, tur.getColor());
             if(tur.getGanoTurno())
@@ -51,7 +58,7 @@ public class TableroGUI
         // si condicion es repetir turno, volver a tirar dados
     }
 
-    void tirarDados(int cels1, int cels2)
+    void mensajeDados(int cels1, int cels2)
     {
         JButton1 bDado1 = new JButton1("DADO-1", 100, 25);
         JButton1 bDado2 = new JButton1("DADO-2", 100, 25);
@@ -86,34 +93,28 @@ public class TableroGUI
         dDado.locationSettings();
     }
 
-
     // cels: celdas a mover, ori: celda origen, desde donde se mueve la ficha
     Celda destino1(int cels, Celda ori)
     {
-        // columnas para completar fila inicial
-        int num1 = cols - 1 - ori.getCol();
         // celda destino
         int filB = 0;
         int colB = 0;
 
+        int num1 = ori.getFil() % 2 == 0 ? cols - 1 - ori.getCol() : ori.getCol();
+        
         if(cels <= num1)
         {
             filB = ori.getFil();
-            colB = ori.getCol() + cels;
+            colB = ori.getFil() % 2 == 0 ? ori.getCol() + cels : ori.getCol() - cels;
         }
         if(cels > num1)
-        {     
-            // celdas que hay en siguientes filas
+        {
             int num2 = cels - num1;
-            // filas completas que recorre
             int num3 = num2 / cols;
-            // columnas que recorre de ultima fila
             int num4 = num2 % cols;
-            // fil y col destino
-            filB = num4 == 0 ? num3 + ori.getFil() : num3 + ori.getFil() + 1;
-            colB = num4 == 0 ? cols - 1 : num4 - 1;
+            filB = num4 == 0 ? ori.getFil() + num3 : ori.getFil() + num3 + 1;
+            colB = filB % 2 == 0 ? num4 - 1 : cols - num4;
         }
-        
         return new Celda(filB, colB);
     }
 
@@ -124,7 +125,6 @@ public class TableroGUI
         Celda celB = aCeldas[celA.getFil()][celA.getCol()];
         if(celB instanceof CeldaA)
         {
-            
             celB = ((CeldaA) celB).getDes();
             mensaje = "[?] AVANZARA A " + celB.toString();
         }
@@ -145,13 +145,15 @@ public class TableroGUI
         }
         if(celB instanceof CeldaD)
         {
+            celB = celA;
             tur.setGanoTurno(true);
             mensaje = "[!] GANO UN TURNO MAS";
         }
         if(celB instanceof CeldaP)
         {
+            celB = celA;
             tur.setPerdioTurno(true);
-            mensaje = "[!] PERDIO EL SIGUIENTE TURNO";
+            mensaje = "[!] PERDIO SU PROXIMO TURNO";
         }
         tur.setCelda(celB);
         mostrarMensaje(mensaje);
@@ -210,11 +212,9 @@ public class TableroGUI
             int j = celda.getCol();
             aCeldas[i][j] = celda;
         }
-
-
     }
 
-    void tableroUI(int fils, int cols)
+    void crearUI(int fils, int cols)
     {
         JPanel pGrid = new JPanel();
         pGrid.setLayout(new GridLayout(fils, cols));

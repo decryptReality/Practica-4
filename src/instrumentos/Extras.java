@@ -2,7 +2,7 @@ package instrumentos;
 
 import java.util.Random;
 
-class Extras
+public class Extras
 {
     private static Random random = new Random();
 

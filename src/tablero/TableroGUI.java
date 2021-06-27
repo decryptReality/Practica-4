@@ -20,37 +20,6 @@ public class TableroGUI
     {
     }
 
-    Celda verificar(int fil, int col)
-    {
-        Celda cel = aCeldas[fil][col];
-        if(cel instanceof CeldaA)
-        {
-            // avanzar a celda X
-            return new Celda(cel.getFil(), cel.getCol() + ((CeldaA) cel).getCels());
-        }
-        if(cel instanceof CeldaB)
-        {
-            // bajar a celda X
-
-            return new Celda(((CeldaB) cel).getFilB(), ((CeldaB) cel).getColB());
-        }
-        if(cel instanceof CeldaD)
-        {
-            // tirar dados
-        }
-        if(cel instanceof CeldaP)
-        {
-            // perder turno siguiente
-        }
-        if(cel instanceof CeldaR)
-        {
-            // retroceder a celda X
-        }
-        if(cel instanceof CeldaS)
-        {
-            // subir a celda X
-        }
-    }
 
 
     void mensajeTurno(Turno tur)
@@ -60,7 +29,12 @@ public class TableroGUI
             int cels1 = Extras.dado(1, 6);
             int cels2 = Extras.dado(1, 6);
             tirarDados(cels1, cels2);
-            Celda des = destino(cels1 + cels2, tur.getCelda());
+            // des-tino de ficha despues de tirar dados
+            Celda des1 = destino1(cels1 + cels2, tur.getCelda());
+            // des-tino de ficha si des1 mueve la ficha
+            Celda des2 = destino2(des1, tur);
+            tur.setCelda(des2);
+            cambiarColor(des2, tur.getColor());
         }
         else
         {
@@ -109,19 +83,9 @@ public class TableroGUI
         dDado.locationSettings();
     }
 
-    void mensaje(int cels1, int cels2)
-    {
-        JTextArea1 taResultado = new JTextArea1(false, 200, 40);
-        taResultado.lineWrapSettings(true);
-
-        JDialog1 dDado = new JDialog1("CELDA DESTINO", (JDialog1) null, false);
-        dDado.add(taResultado);
-        dDado.sizeSettings(true, 240, 120);
-        dDado.locationSettings();
-    }
 
     // cels: celdas a mover, ori: celda origen, desde donde se mueve la ficha
-    Celda destino(int cels, Celda ori)
+    Celda destino1(int cels, Celda ori)
     {
         // columnas para completar fila inicial
         int num1 = cols - 1 - ori.getCol();
@@ -150,9 +114,61 @@ public class TableroGUI
         return new Celda(filB, colB);
     }
 
-    void cambiarColor(int fil, int col, Color bg)
+    Celda destino2(Celda celA, Turno tur)
     {
-        aBotones[fil][col].setBackground(bg);
+        mostrarMensaje("[?] LLEGO A " + celA.toString());
+        String mensaje = "";
+        Celda celB = aCeldas[celA.getFil()][celA.getCol()];
+        if(celB instanceof CeldaA)
+        {
+            
+            celB = ((CeldaA) celB).getDes();
+            mensaje = "[?] AVANZARA A " + celB.toString();
+        }
+        if(celB instanceof CeldaB)
+        {
+            celB = ((CeldaB) celB).getDes();
+            mensaje = "[?] BAJARA A " + celB.toString();
+        }
+        if(celB instanceof CeldaR)
+        {
+            celB = ((CeldaR) celB).getDes();
+            mensaje = "[?] RETROCEDERA A " + celB.toString();
+        }
+        if(celB instanceof CeldaS)
+        {
+            celB = ((CeldaS) celB).getDes();
+            mensaje = "[?] SUBIRA A " + celB.toString();
+        }
+        if(celB instanceof CeldaD)
+        {
+            mensaje = "[!] GANO UN TURNO MAS, A TIRAR LOS DADOS";
+        }
+        if(celB instanceof CeldaP)
+        {
+            mensaje = "[!] PERDIO EL SIGUIENTE TURNO";
+        }
+        tur.setCelda(celB);
+        mostrarMensaje(mensaje);
+        return celB;
+    }
+
+    void mostrarMensaje(String text)
+    {
+        JTextArea1 taResultado = new JTextArea1(false, 200, 40);
+        taResultado.lineWrapSettings(true);
+        taResultado.append(text);
+
+        JDialog1 dDado = new JDialog1("CELDA DESTINO", (JDialog1) null, false);
+        dDado.add(taResultado);
+
+        dDado.sizeSettings(true, 240, 120);
+        dDado.locationSettings();
+    }
+
+    void cambiarColor(Celda cel, Color bg)
+    {
+        aBotones[cel.getFil()][cel.getCol()].setBackground(bg);
     }
 
     // hacer metodo presionar boton que se active y desactive segun el contexto

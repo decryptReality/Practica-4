@@ -7,15 +7,19 @@ public class Turno
 {
     Jugador jugador;
     Celda celda;
-    // c-olor
-    Color cFicha;
+    // color de ficha
+    Color color;
     boolean pierdeTurno;
 
     public Turno(Jugador jugador, Celda celda, Color cFicha) 
     {
         this.jugador = jugador;
         this.celda = celda;
-        this.cFicha = cFicha;
+        this.color = cFicha;
+    }
+
+    public void setCelda(Celda celda) {
+        this.celda = celda;
     }
 
     public boolean getPierdeTurno() {
@@ -34,7 +38,7 @@ public class Turno
         return celda;
     }
 
-    public Color getcFicha() {
-        return cFicha;
+    public Color getColor() {
+        return color;
     }    
 }

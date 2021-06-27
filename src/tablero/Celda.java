@@ -12,6 +12,12 @@ public class Celda
         this.col = col;
     }
 
+    @Override
+    public String toString() 
+    {
+        return "CELDA (" + fil + "," + col + ")";
+    }
+
     public int getFil() {
         return fil;
     }

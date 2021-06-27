@@ -5,7 +5,6 @@ import tablero.Celda;
 // celda A-vanzar
 public class CeldaA extends Celda
 {
-
     // celdas que avanza
     int cel;
 

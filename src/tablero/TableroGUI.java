@@ -24,28 +24,60 @@ public class TableroGUI
         Celda cel = aCeldas[fil][col];
         if(cel instanceof CeldaA)
         {
-            
-
+            // avanzar a celda X
         }
         if(cel instanceof CeldaB)
         {
-            
+            // bajar a celda X
         }
         if(cel instanceof CeldaD)
         {
-            
+            // tirar dados
         }
         if(cel instanceof CeldaP)
         {
-            
+            // perder turno siguiente
         }
         if(cel instanceof CeldaR)
         {
-            
+            // retroceder a celda X
         }
         if(cel instanceof CeldaS)
         {
-            
+            // subir a celda X
+        }
+    }
+
+    // hacer metodo presionar boton que se active y desactive segun el contexto
+    // y que devuelva una celda
+    
+    void verificarCelda(int fil, int col)
+    {
+        // si 
+        Celda cel = aCeldas[fil][col];
+        if(cel instanceof CeldaA)
+        {
+            // avanzar a celda X
+        }
+        if(cel instanceof CeldaB)
+        {
+            // bajar a celda X
+        }
+        if(cel instanceof CeldaD)
+        {
+            // tirar dados
+        }
+        if(cel instanceof CeldaP)
+        {
+            // perder turno siguiente
+        }
+        if(cel instanceof CeldaR)
+        {
+            // retroceder a celda X
+        }
+        if(cel instanceof CeldaS)
+        {
+            // subir a celda X
         }
     }
 

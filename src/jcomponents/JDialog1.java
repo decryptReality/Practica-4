@@ -20,6 +20,7 @@ public class JDialog1 extends JDialog
     {
         super(owner, title, modal);
         setLayout(new FlowLayout());
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     public void sizeSettings(boolean resize, int width, int height)

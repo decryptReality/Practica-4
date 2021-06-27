@@ -1,14 +1,9 @@
 package tablero;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-
 import jcomponents.*;
 import tablero.celdas.*;
 import instrumentos.*;
@@ -23,7 +18,6 @@ public class TableroGUI
 
     public static void main(String[] args) 
     {
-        tirarDados();
     }
 
     void verificar(int fil, int col)
@@ -55,16 +49,34 @@ public class TableroGUI
         }
     }
 
-    static int tirarDados()
+
+    void mensajeTurno(Turno tur)
+    {
+        if(!tur.getPierdeTurno())
+        {
+            int cels1 = Extras.dado(1, 6);
+            int cels2 = Extras.dado(1, 6);
+            tirarDados(cels1, cels2);
+            Celda des = destino(cels1 + cels2, tur.getCelda());
+        }
+        else
+        {
+            tur.setPierdeTurno(false);
+        }
+        // dependiendo si !pierdeTurno hacer
+        // se muestra tirar dados
+        // devolver celda destino
+        // mostrar condicion de celda, si tiene
+        // si condicion es repetir turno, volver a tirar dados
+
+    }
+
+    void tirarDados(int cels1, int cels2)
     {
         JButton1 bDado1 = new JButton1("DADO-1", 100, 25);
         JButton1 bDado2 = new JButton1("DADO-2", 100, 25);
         JTextArea1 taResultado = new JTextArea1(false, 200, 40);
-        //taResultado.setBackground(new Color(50,150,150));
         taResultado.lineWrapSettings(true);
-
-        int cels1 = Extras.dado(1, 6);
-        int cels2 = Extras.dado(1, 6);
 
         bDado1.addActionListener(new ActionListener() 
         {
@@ -92,11 +104,21 @@ public class TableroGUI
         dDado.add(taResultado);
         dDado.sizeSettings(true, 240, 120);
         dDado.locationSettings();
-
-        return cels1 + cels2;
     }
 
-    void destino(int cels, Celda ori)
+    void mensaje(int cels1, int cels2)
+    {
+        JTextArea1 taResultado = new JTextArea1(false, 200, 40);
+        taResultado.lineWrapSettings(true);
+
+        JDialog1 dDado = new JDialog1("CELDA DESTINO", (JDialog1) null, false);
+        dDado.add(taResultado);
+        dDado.sizeSettings(true, 240, 120);
+        dDado.locationSettings();
+    }
+
+    // cels: celdas a mover, ori: celda origen, desde donde se mueve la ficha
+    Celda destino(int cels, Celda ori)
     {
         // columnas para completar fila inicial
         int num1 = cols - 1 - ori.getCol();
@@ -121,26 +143,8 @@ public class TableroGUI
             filB = num4 == 0 ? num3 + ori.getFil() : num3 + ori.getFil() + 1;
             colB = num4 == 0 ? cols - 1 : num4 - 1;
         }
-        Celda des = new Celda(filB, colB);
-    }
-
-    void mensajeTurno(Turno tur)
-    {
-        if(!tur.getPierdeTurno())
-        {
-
-        }
-        else
-        {
-            tur.setPierdeTurno(false);
-        }
-        // dependiendo si !pierdeTurno hacer
-        // se muestra tirar dados
-        // devolver celda destino
-        // mostrar concicion de celda, si tiene
-        // si condicion es repetir turno, volver a tirar dados
-
-
+        
+        return new Celda(filB, colB);
     }
 
     void cambiarColor(int fil, int col, Color bg)

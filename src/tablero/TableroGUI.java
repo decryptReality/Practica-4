@@ -18,6 +18,8 @@ public class TableroGUI
     Celda[][] aCeldas;
     JButton1[][] aBotones;
     ArrayList<Turno> alTurnos;
+    int fils;
+    int cols;
 
     public static void main(String[] args) 
     {
@@ -53,13 +55,16 @@ public class TableroGUI
         }
     }
 
-    static void tirarDados()
+    static int tirarDados()
     {
         JButton1 bDado1 = new JButton1("DADO-1", 100, 25);
         JButton1 bDado2 = new JButton1("DADO-2", 100, 25);
         JTextArea1 taResultado = new JTextArea1(false, 200, 40);
-        taResultado.setBackground(new Color(50,150,150));
+        //taResultado.setBackground(new Color(50,150,150));
         taResultado.lineWrapSettings(true);
+
+        int cels1 = Extras.dado(1, 6);
+        int cels2 = Extras.dado(1, 6);
 
         bDado1.addActionListener(new ActionListener() 
         {
@@ -67,9 +72,7 @@ public class TableroGUI
             public void actionPerformed(ActionEvent e) 
             {
                 bDado1.setEnabled(false);
-                int cels = Extras.dado(6);
-                taResultado.append("Dado-1: " + cels + "\n");
-
+                taResultado.append("Dado-1: " + cels1 + "\n");
             }
         }
         );
@@ -79,8 +82,7 @@ public class TableroGUI
             public void actionPerformed(ActionEvent e) 
             {
                 bDado2.setEnabled(false);
-                int cels = Extras.dado(6);
-                taResultado.append("Dado-2: " + cels + "\n");
+                taResultado.append("Dado-2: " + cels2 + "\n");
             }
         }
         );
@@ -90,6 +92,36 @@ public class TableroGUI
         dDado.add(taResultado);
         dDado.sizeSettings(true, 240, 120);
         dDado.locationSettings();
+
+        return cels1 + cels2;
+    }
+
+    void destino(int cels, Celda ori)
+    {
+        // columnas para completar fila inicial
+        int num1 = cols - 1 - ori.getCol();
+        // celda destino
+        int filB = 0;
+        int colB = 0;
+
+        if(cels <= num1)
+        {
+            filB = ori.getFil();
+            colB = ori.getCol() + cels;
+        }
+        if(cels > num1)
+        {     
+            // celdas que hay en siguientes filas
+            int num2 = cels - num1;
+            // filas completas que recorre
+            int num3 = num2 / cols;
+            // columnas que recorre de ultima fila
+            int num4 = num2 % cols;
+            // fil y col destino
+            filB = num4 == 0 ? num3 + ori.getFil() : num3 + ori.getFil() + 1;
+            colB = num4 == 0 ? cols - 1 : num4 - 1;
+        }
+        Celda des = new Celda(filB, colB);
     }
 
     void mensajeTurno(Turno tur)
@@ -123,6 +155,8 @@ public class TableroGUI
     // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
     TableroGUI(int fils, int cols, ArrayList<Celda> alCeldas)
     {
+        this.fils = fils;
+        this.cols = cols;
         aCeldas = new Celda[fils][cols];
         aBotones = new JButton1[fils][cols];    
 

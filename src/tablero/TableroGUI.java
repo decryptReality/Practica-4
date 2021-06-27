@@ -47,39 +47,41 @@ public class TableroGUI
             // subir a celda X
         }
     }
+    
+    void tirarDados()
+    {
+        JButton1 bDado1 = new JButton1("TIRAR DADO-1", 60, 25);
+        JButton1 bDado2 = new JButton1("TIRAR DADO-2", 60, 25);
+
+    }
+
+    void mensajeTurno(Turno tur)
+    {
+        if(!tur.getPierdeTurno())
+        {
+
+        }
+        else
+        {
+            tur.setPierdeTurno(false);
+        }
+        // dependiendo si !pierdeTurno hacer
+        // se muestra tirar dados
+        // devolver celda destino
+        // mostrar concicion de celda, si tiene
+        // si condicion es repetir turno, volver a tirar dados
+
+
+    }
+
+    void cambiarColor(int fil, int col, Color bg)
+    {
+        aBotones[fil][col].setBackground(bg);
+    }
 
     // hacer metodo presionar boton que se active y desactive segun el contexto
     // y que devuelva una celda
     
-    void verificarCelda(int fil, int col)
-    {
-        // si 
-        Celda cel = aCeldas[fil][col];
-        if(cel instanceof CeldaA)
-        {
-            // avanzar a celda X
-        }
-        if(cel instanceof CeldaB)
-        {
-            // bajar a celda X
-        }
-        if(cel instanceof CeldaD)
-        {
-            // tirar dados
-        }
-        if(cel instanceof CeldaP)
-        {
-            // perder turno siguiente
-        }
-        if(cel instanceof CeldaR)
-        {
-            // retroceder a celda X
-        }
-        if(cel instanceof CeldaS)
-        {
-            // subir a celda X
-        }
-    }
 
     // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
     TableroGUI(int fils, int cols, ArrayList<Celda> alCeldas)

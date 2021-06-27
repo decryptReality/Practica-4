@@ -108,6 +108,16 @@ array de
         cambiar el color del boton al de la ficha de algun jugador
         puede tener imagen o figura
     turnos
+        mientras no haya ganador
+        por cada turno mostrar dialogo de tirar dados
+            SI tiene multa
+                se muestra otro dialogo y no el de dados
+                el dialogo dado debe devolver un int casillas
+                condiciones
+                    siempre en turno mostrar dialogo de condicion de celdas
+                    si no penalizacion 
+                    si tirar otra vez dados
+                        se repite y muestr dialogo de repetir
         contien objetos turno
         representa el orden de los turnos
         Clase Turno contiene

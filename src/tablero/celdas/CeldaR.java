@@ -6,15 +6,22 @@ import tablero.Celda;
 public class CeldaR extends Celda
 {
     // celdas que retrocede
-    int cel;
+    int cels;
+    // celda des-tino
+    Celda des;
 
-    public CeldaR(int fil, int col, int cel) 
+    public CeldaR(int fil, int col, int cels) 
     {
         super(fil, col);
-        this.cel = cel;
+        this.cels = cels;
+        des = new Celda(fil, col - cels);
     }
 
-    public int getCel() {
-        return cel;
+    public Celda getDes() {
+        return des;
+    }
+
+    public int getCels() {
+        return cels;
     }
 }

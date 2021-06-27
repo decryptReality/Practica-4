@@ -20,16 +20,19 @@ public class TableroGUI
     {
     }
 
-    void verificar(int fil, int col)
+    Celda verificar(int fil, int col)
     {
         Celda cel = aCeldas[fil][col];
         if(cel instanceof CeldaA)
         {
             // avanzar a celda X
+            return new Celda(cel.getFil(), cel.getCol() + ((CeldaA) cel).getCels());
         }
         if(cel instanceof CeldaB)
         {
             // bajar a celda X
+
+            return new Celda(((CeldaB) cel).getFilB(), ((CeldaB) cel).getColB());
         }
         if(cel instanceof CeldaD)
         {

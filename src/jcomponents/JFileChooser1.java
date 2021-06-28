@@ -58,8 +58,8 @@ public class JFileChooser1 extends JFileChooser
         return null;
     }
 
-    public void setFilter(String description, String[] extensions, boolean hasDot)
+    public void setFilter(String description, String[] extensions)
     {
-        setFileFilter(new FileFilter_1(description, extensions, hasDot));
+        setFileFilter(new FileFilter_1(description, extensions));
     }
 }

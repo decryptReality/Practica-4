@@ -1,11 +1,21 @@
 package ventanas;
 
+import jcomponents.FileFilter_2;
 import jcomponents.JButton1;
 import jcomponents.JDialog1;
 import jcomponents.JFileChooser1;
 import jcomponents.JFrame1;
 import jcomponents.JTextArea1;
+import tablero.Tablero;
+
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Vector;
 
 import esencial.Jugador;
@@ -14,10 +24,12 @@ public class JuegoUI
 {
     static Vector<Jugador> vJugadores;
     static JFileChooser1 fc = new JFileChooser1();
+    static Tablero tab;
 
     public static void main(String[] args) {
         menu1();
     }
+
     static void menu1()
     {
         JButton1 bJugar = new JButton1("JUGAR", 140, 25);
@@ -33,7 +45,6 @@ public class JuegoUI
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-                    menuJugadores();
                 }
             }
         );
@@ -62,13 +73,14 @@ public class JuegoUI
         JButton1 bCargar = new JButton1("CARGAR", 140, 26);
         JButton1 bGuardar = new JButton1("GUARDAR", 140, 26);
         JButton1 bListar = new JButton1("LISTAR", 140, 26);
+        // crear opcion de limpiar los jugadores del programa, en: listar > limpiar
         bCargar.addActionListener(
             new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-                    archivoDAT();
+                    inputDAT();
                 }
             }
         );
@@ -78,7 +90,7 @@ public class JuegoUI
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-                    archivoTXT();
+                    outputDAT();
                 }
             }
         );
@@ -102,16 +114,57 @@ public class JuegoUI
         dMenu.locationSettings();
     }
 
-    static void archivoDAT()
+    static void outputDAT()
     {
         fc.resetChoosableFileFilters();
-        fc.getDirectory(null);
+        File dir = fc.getDirectory(null);
+        // este stream ya lleva el dir de salida (donde se guardaran los dats)
+        for(Jugador jugador : vJugadores)
+        {  
+            try 
+            {
+                new ObjectOutputStream(new FileOutputStream(new File(dir, jugador.toString() + ".dat") )).writeObject(jugador);
+            } 
+            catch (FileNotFoundException e) 
+            {
+                e.printStackTrace();
+            } catch (IOException e) 
+            {
+                e.printStackTrace();
+            }
+
+        }
+        
     }
 
-    static void archivoTXT()
+    static void inputDAT()
     {
         fc.resetChoosableFileFilters();
-        fc.setFilter(".txt", new String[] {"txt"}, false);
-        fc.getFile(null);
+        // directorio donde estan los dats
+        File dir = fc.getDirectory(null);
+        if(dir != null)
+        {
+            // dats dentro de dir
+            File[] dats = dir.listFiles(new FileFilter_2(new String[] {".dat"}));
+            // para cada dat de dats extraer un objeto jugador
+            for(File dat : dats)
+            {
+                try 
+                {
+                    Jugador j = (Jugador) new ObjectInputStream(new FileInputStream(dat)).readObject();
+                } 
+                catch (Exception e) 
+                {
+                    System.out.println("[!] Archivo corrupto");
+                }
+            }
+        }
+    }
+
+    static void inputTXT()
+    {
+        fc.resetChoosableFileFilters();
+        fc.setFilter(".txt", new String[] {"txt"});
+        File txt = fc.getFile(null);
     }
 }

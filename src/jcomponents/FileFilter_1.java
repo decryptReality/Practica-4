@@ -7,25 +7,11 @@ public class FileFilter_1 extends FileFilter
 {
     String[] extensions;
     String description;
-    boolean hasDot;
 
-    public FileFilter_1(String description, String[] extensions, boolean hasDot)
+    public FileFilter_1(String description, String[] extensions)
     {
         this.extensions = extensions;
         this.description = description;
-        this.hasDot = hasDot;
-    }
-
-    public String extension(int index)
-    {
-        if (hasDot)
-        {
-            return extensions[index];
-        }
-        else
-        {
-            return "." + extensions[index];
-        }
     }
 
     @Override
@@ -35,17 +21,14 @@ public class FileFilter_1 extends FileFilter
         {
             return true;
         }
-        else
+        for (int i = 0; i < extensions.length; i = i + 1) 
         {
-            for(int i = 0; i < extensions.length; i = i + 1)
+            if (f.getName().endsWith(extensions[i])) 
             {
-                if (f.getName().endsWith(extension(i)))
-                {
-                    return true;
-                }
+                return true;
             }
-            return false;
         }
+        return false;
     }
 
     @Override

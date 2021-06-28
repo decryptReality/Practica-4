@@ -1,6 +1,18 @@
 package esencial;
-public class Jugador 
+
+import java.io.Serializable;
+
+public class Jugador implements Serializable
 {
+    static final long serailVersionUID = 1L;
+    int id;
+    String nombre;
+    String apellido;
+    // partidas
+    int jugadas;
+    int ganadas;
+    int perdidas;
+
     public Jugador(int id, String nombre, String apellido, int jugadas, int ganadas, int perdidas) {
         this.id = id;
         this.nombre = nombre;
@@ -9,14 +21,7 @@ public class Jugador
         this.ganadas = ganadas;
         this.perdidas = perdidas;
     }
-    int id;
-    String nombre;
-    String apellido;
-    // p-artidas
-    int jugadas;
-    int ganadas;
-    int perdidas;
-
+    
     public int getId() {
         return id;
     }
@@ -43,5 +48,11 @@ public class Jugador
     }
     public void perdida() {
         perdidas = perdidas + 1;
+    }
+
+    @Override
+    public String toString() 
+    {
+        return id + "-" + jugadas + "." + "." + ganadas + "." + perdidas + "-" + nombre + "." + apellido;
     }
 }

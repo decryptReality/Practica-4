@@ -1,8 +1,21 @@
-package ventanas;
+package instrumentos;
 
-public class Linea 
+public class Pieza
 {
-    String iniciaCon;
+    // letras con las que inicia la linea
+    String prefijo;
+    // cantidad de parametros
     int parametros;
+    
+    public Pieza(String prefijo, int parametros) {
+        this.prefijo = prefijo;
+        this.parametros = parametros;
+    }
 
+    public String getPrefijo() {
+        return prefijo;
+    }
+    public int getParametros() {
+        return parametros;
+    }    
 }

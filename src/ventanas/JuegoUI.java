@@ -20,6 +20,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import esencial.Jugador;
+import instrumentos.Pieza;
 
 public class JuegoUI 
 {
@@ -161,25 +162,43 @@ public class JuegoUI
 
     static void inputTXT()
     {
-        String[] info = {"tablero(", "pierdeturno(", "tiradados(", "avanza(", "retrocede(", "subida(", "bajada("};
-
         fc.resetChoosableFileFilters();
         fc.setFilter(".txt", new String[] {"txt"});
 
         File txt = fc.getFile(null);
         if(txt != null)
         {
-            Scanner scanner;
             try 
             {
-                scanner = new Scanner(txt);
+                Scanner scanner = new Scanner(txt);
                 while (scanner.hasNextLine()) 
                 {
                     // acortar cada linea
                     String linea1 = scanner.nextLine().trim();
                     // verificar el su contenido **** TEMPORAL ****
                     System.out.println(linea1);
+
+                    // verificamos si la linea empieza con algun prefijo y termina con ")"
+                    Pieza pieza = getPieza(linea1);
+                    if(pieza != null)
+                    {
+                        // extraer parametros de linea1
+                        String linea2 = linea1.substring(pieza.getPrefijo().length(), linea1.length() - 1);
+                        // seperar los parametros
+                        String[] params = linea2.split(",");
+                        // asegurar que cantidad de parametros en correcta
+                        if(params.length == pieza.getParametros())
+                        {
+                            for(int i = 0; i < aLineas.length; i = i + 1)
+                            {
+                                params[i] = params[i].trim();
+                                // verificar su contenido *** TEMPORAL ***
+                                System.out.println("    " + params[i]);
+                            }
                     
+                            
+                        }
+                    }
                 }
             } 
             catch (Exception e) 
@@ -188,4 +207,27 @@ public class JuegoUI
             }
         }
     }
+
+    static Pieza getPieza(String linea)
+    {
+        for(int i = 0; i < aLineas.length; i = i + 1)
+        {
+            if(linea.startsWith(aLineas[i].getPrefijo()) & linea.endsWith(")"))
+            {
+                return aLineas[i];
+            }
+        }
+        return null;
+    }
+
+    static Pieza[] aLineas = 
+    {
+        new Pieza("tablero(", 8), 
+        new Pieza("pierdeturno(", 12), 
+        new Pieza("tiradados(", 10), 
+        new Pieza("avanza(", 7), 
+        new Pieza("retrocede(", 10), 
+        new Pieza("subida(", 7), 
+        new Pieza("bajada(", 7), 
+    };
 }

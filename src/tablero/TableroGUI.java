@@ -18,13 +18,8 @@ public class TableroGUI
     int fils;
     int cols;
 
-    public static void main(String[] args) 
-    {
-
-    }
-
     // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
-    TableroGUI(Tablero tab, ArrayList<Turno> alTurnos)
+    public TableroGUI(Tablero tab, ArrayList<Turno> alTurnos)
     {
         fils = tab.getFils();
         cols = tab.getCols();

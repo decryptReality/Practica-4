@@ -1,23 +1,11 @@
 package ventanas;
 
-import jcomponents.FileFilter_2;
-import jcomponents.JButton1;
-import jcomponents.JDialog1;
-import jcomponents.JFileChooser1;
-import jcomponents.JFrame1;
-import jcomponents.JTextArea1;
-import tablero.Tablero;
+import jcomponents.*;
+import tablero.*;
 import tablero.celdas.*;
-
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Scanner;
-import java.util.Vector;
-
+import java.io.*;
+import java.util.*;
 import esencial.Jugador;
 import instrumentos.Pieza;
 
@@ -208,6 +196,7 @@ public class JuegoUI
                                     continue;
                                 }
                             }
+                            tomarAcciones(pieza, nums);
                         }
                     }
                 }
@@ -231,7 +220,19 @@ public class JuegoUI
         return null;
     }
 
-    void tomarAcciones(Pieza pieza, int[] nums)
+    static void elegirJugadores()
+    {
+        
+    }
+
+    static void iniciarPartida()
+    {
+        ArrayList<Turno> turnos = new ArrayList<>();
+
+        TableroGUI partida = new TableroGUI(tablero, turnos);
+    }
+
+    static void tomarAcciones(Pieza pieza, int[] nums)
     {
         switch(pieza.getPrefijo())
         {
@@ -261,12 +262,12 @@ public class JuegoUI
 
     static Pieza[] aLineas = 
     {
-        new Pieza("tablero(", 8), 
-        new Pieza("pierdeturno(", 12), 
-        new Pieza("tiradados(", 10), 
-        new Pieza("avanza(", 7), 
-        new Pieza("retrocede(", 10), 
-        new Pieza("subida(", 7), 
-        new Pieza("bajada(", 7), 
+        new Pieza("tablero(", 2), 
+        new Pieza("pierdeturno(", 2), 
+        new Pieza("tiradados(", 2), 
+        new Pieza("avanza(", 3), 
+        new Pieza("retrocede(", 3), 
+        new Pieza("subida(", 4), 
+        new Pieza("bajada(", 4), 
     };
 }

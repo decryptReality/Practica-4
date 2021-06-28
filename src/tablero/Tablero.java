@@ -1,5 +1,6 @@
 package tablero;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class Tablero 
@@ -27,6 +28,12 @@ public class Tablero
     {
         celdas.add(cel);
         celdas.trimToSize();
+    }
+
+    public void clearCeldas()
+    {
+        // para utilizar otro conjunto de celdas especiales
+        celdas.clear();
     }
 
     public int getFils() {

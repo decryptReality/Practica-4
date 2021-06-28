@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+
+import esencial.Jugador;
 import jcomponents.*;
 import tablero.celdas.*;
 import instrumentos.*;
@@ -35,21 +37,42 @@ public class TableroGUI
             int cels1 = Extras.dado(1, 6);
             int cels2 = Extras.dado(1, 6);
             mensajeDados(cels1, cels2);
-            // des-tino de ficha despues de tirar dados
-            Celda des1 = destino1(cels1 + cels2, tur.getCelda());
-            // despintamos la celda anterior y pintamos des1
-            cambiarColor(tur.getCelda());
-            cambiarColor(des1, tur.getColor());
-            // des-tino-2 de ficha SI des1 mueve la ficha
-            // aqui ajustamos nuevo valor en tur.setCelda(des2)
-            Celda des2 = destino2(des1, tur);
-            // despintamos des1 y pintamos des2
-            cambiarColor(des1);
-            cambiarColor(des2, tur.getColor());
-            if(tur.getGanoTurno())
+            if(cels1 + cels2 < faltante(tur.getCelda()))
             {
-                tur.setGanoTurno(false);
-                manejarTurno(tur);
+                // des-tino de ficha despues de tirar dados
+                Celda des1 = destino1(cels1 + cels2, tur.getCelda());
+                // despintamos la celda anterior y pintamos des1
+                cambiarColor(tur.getCelda());
+                cambiarColor(des1, tur.getColor());
+                // des-tino-2 de ficha SI des1 mueve la ficha
+                // aqui ajustamos nuevo valor en tur.setCelda(des2)
+                Celda des2 = destino2(des1, tur);
+                // despintamos des1 y pintamos des2
+                cambiarColor(des1);
+                cambiarColor(des2, tur.getColor());
+                if (tur.getGanoTurno()) 
+                {
+                    tur.setGanoTurno(false);
+                    manejarTurno(tur);
+                }
+            }
+            else
+            {
+                mostrarMensaje("[?] HA LLEGADO A LA CELDA FINAL, EL GANADOR ES " + tur.getJugador().getNombre() + " " + tur.getJugador().getApellido());   
+                for(Turno turn : alTurnos)
+                {
+                    if(!turn.getGanoPartida())
+                    {
+                        turn.getJugador().jugada();
+                        turn.getJugador().perdida();
+                    }
+                    if(turn.getGanoPartida())
+                    {
+                        turn.getJugador().jugada();
+                        turn.getJugador().ganada();
+                    }
+                }
+                tur.setGanoPartida(true);
             }
         }
         else
@@ -254,37 +277,20 @@ public class TableroGUI
         fGrid.locationSettings();
     }
 
-    void turnar(Turno tur)
+    void turnar()
     {
-        if(!tur.getPerdioTurno())
+        boolean hayGanador = false;
+        while(!hayGanador)
         {
-            // cambiamos color de celda actual
-            cambiarColor(tur.getCelda(), tur.getColor());
-            // mostramos el resultado de los dados
-            int cels1 = Extras.dado(1, 6);
-            int cels2 = Extras.dado(1, 6);
-            mensajeDados(cels1, cels2);
-            // des-tino de ficha despues de tirar dados
-            Celda des1 = destino1(cels1 + cels2, tur.getCelda());
-            // despintamos la celda anterior y pintamos des1
-            cambiarColor(tur.getCelda());
-            cambiarColor(des1, tur.getColor());
-            // des-tino-2 de ficha SI des1 mueve la ficha
-            // aqui ajustamos nuevo valor en tur.setCelda(des2)
-            Celda des2 = destino2(des1, tur);
-            // despintamos des1 y pintamos des2
-            cambiarColor(des1);
-            cambiarColor(des2, tur.getColor());
-            if(tur.getGanoTurno())
+            for(Turno tur : alTurnos)
             {
-                tur.setGanoTurno(false);
                 manejarTurno(tur);
+                if(tur.getGanoPartida())
+                {
+                    hayGanador = true;
+                    break;
+                }
             }
         }
-        else
-        {
-            tur.setPerdioTurno(false);
-        }
     }
-
 }

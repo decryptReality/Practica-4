@@ -9,8 +9,9 @@ public class Turno
     Celda celda;
     // color de ficha
     Color color;
-    boolean perdioTurno;
-    boolean ganoTurno;
+    boolean perdioTurno = false;
+    boolean ganoTurno = false;
+    boolean ganoPartida = false;
 
     public Turno(Jugador jugador, Celda celda, Color cFicha) 
     {
@@ -57,6 +58,14 @@ public class Turno
 
     public void setGanoTurno(boolean ganoTurno) {
         this.ganoTurno = ganoTurno;
+    }
+
+    public boolean getGanoPartida() {
+        return ganoPartida;
+    }
+
+    public void setGanoPartida(boolean ganoPartida) {
+        this.ganoPartida = ganoPartida;
     }
 
 }

@@ -20,11 +20,75 @@ public class TableroGUI
 
     public static void main(String[] args) 
     {
+
     }
 
-    void turnas()
+    // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
+    TableroGUI(Tablero tab, ArrayList<Turno> alTurnos)
     {
+        fils = tab.getFils();
+        cols = tab.getCols();
+        this.alTurnos = alTurnos;
 
+        aCeldas = new Celda[fils][cols];
+        aBotones = new JButton1[fils][cols];    
+
+        // aqui llenamos el tablero de celdas
+        for(int i = 0; i < fils; i = i + 1)
+        {
+            for(int j = 0; j < cols; j = j + 1)
+            {
+                aCeldas[i][j] = new Celda(i, j);
+            }    
+        }
+
+        // aqui colocamos subtipos de la clase celda
+        for(Celda celda : tab.getCeldas())
+        {
+            int i = celda.getFil();
+            int j = celda.getCol();
+            aCeldas[i][j] = celda;
+        }
+    }
+
+    void crearUI(int fils, int cols)
+    {
+        JPanel pGrid = new JPanel();
+        pGrid.setLayout(new GridLayout(fils, cols));
+        //JPanel1 pGrid = new JPanel1(300, 300);
+
+        for(int i = 0; i < fils; i = i + 1)
+        {
+            for(int j = 0; j < cols; j = j + 1)
+            {
+                aBotones[i][j] = new JButton1(i + "," + j, 30, 30);
+                aBotones[i][j].setBackground(new Color(238,238,238));
+                aBotones[i][j].setMargin(new Insets(1, 1, 1, 1));
+                // botones[i][j].setBorderPainted(false);
+                pGrid.add(aBotones[i][j]);
+            }    
+        }
+        JFrame1 fGrid = new JFrame1("SERPIENTES Y ESCALERAS");
+        fGrid.add(pGrid);
+        fGrid.sizeSettings(true, 500, 500);
+        fGrid.locationSettings();
+    }
+
+    void turnar()
+    {
+        boolean hayGanador = false;
+        while(!hayGanador)
+        {
+            for(Turno tur : alTurnos)
+            {
+                manejarTurno(tur);
+                if(tur.getGanoPartida())
+                {
+                    hayGanador = true;
+                    break;
+                }
+            }
+        }
     }
 
     void manejarTurno(Turno tur)
@@ -220,77 +284,5 @@ public class TableroGUI
     void cambiarColor(Celda cel)
     {
         aBotones[cel.getFil()][cel.getCol()].setBackground(new Color(238, 238, 238));
-    }
-
-
-
-    // hacer metodo presionar boton que se active y desactive segun el contexto
-    // y que devuelva una celda
-    
-
-    // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
-    TableroGUI(int fils, int cols, ArrayList<Celda> alCeldas)
-    {
-        this.fils = fils;
-        this.cols = cols;
-        aCeldas = new Celda[fils][cols];
-        aBotones = new JButton1[fils][cols];    
-
-        // aqui llenamos el tablero de celdas
-        for(int i = 0; i < fils; i = i + 1)
-        {
-            for(int j = 0; j < cols; j = j + 1)
-            {
-                aCeldas[i][j] = new Celda(i, j);
-            }    
-        }
-
-        // aqui colocamos subtipos de la clase celda
-        for(Celda celda : alCeldas)
-        {
-            int i = celda.getFil();
-            int j = celda.getCol();
-            aCeldas[i][j] = celda;
-        }
-    }
-
-    void crearUI(int fils, int cols)
-    {
-        JPanel pGrid = new JPanel();
-        pGrid.setLayout(new GridLayout(fils, cols));
-        //JPanel1 pGrid = new JPanel1(300, 300);
-
-        for(int i = 0; i < fils; i = i + 1)
-        {
-            for(int j = 0; j < cols; j = j + 1)
-            {
-                aBotones[i][j] = new JButton1(i + "," + j, 30, 30);
-                aBotones[i][j].setBackground(new Color(238,238,238));
-                aBotones[i][j].setMargin(new Insets(1, 1, 1, 1));
-                // botones[i][j].setBorderPainted(false);
-                pGrid.add(aBotones[i][j]);
-            }    
-        }
-        JFrame1 fGrid = new JFrame1("SERPIENTES Y ESCALERAS");
-        fGrid.add(pGrid);
-        fGrid.sizeSettings(true, 500, 500);
-        fGrid.locationSettings();
-    }
-
-    void turnar()
-    {
-        boolean hayGanador = false;
-        while(!hayGanador)
-        {
-            for(Turno tur : alTurnos)
-            {
-                manejarTurno(tur);
-                if(tur.getGanoPartida())
-                {
-                    hayGanador = true;
-                    break;
-                }
-            }
-        }
     }
 }

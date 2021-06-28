@@ -14,4 +14,16 @@ public class Tablero
         celdas.add(cel);
         celdas.trimToSize();
     }
+
+    public int getFils() {
+        return fils;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public ArrayList<Celda> getCeldas() {
+        return celdas;
+    }    
 }

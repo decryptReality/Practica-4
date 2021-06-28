@@ -5,9 +5,14 @@ import jcomponents.JDialog1;
 import jcomponents.JFrame1;
 import jcomponents.JTextArea1;
 import java.awt.event.*;
+import java.util.Vector;
+
+import esencial.Jugador;
 
 public class JuegoUI 
 {
+    static Vector<Jugador> vJugadores;
+
     public static void main(String[] args) {
         menu1();
     }
@@ -20,6 +25,16 @@ public class JuegoUI
 
         dMenu.add(bJugar);
         dMenu.add(bJugador);
+        bJugar.addActionListener(
+            new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    menuJugadores();
+                }
+            }
+        );
         bJugador.addActionListener(
             new ActionListener()
             {
@@ -55,5 +70,5 @@ public class JuegoUI
         dMenu.sizeSettings(true, 330, 170);
         dMenu.locationSettings();
     } 
-
+    
 }

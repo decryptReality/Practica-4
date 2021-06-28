@@ -7,9 +7,23 @@ public class Tablero
     // dimensiones del tablero
     int fils;
     int cols;
+    // celdas especiales
     ArrayList<Celda> celdas;
 
-    void addCelda(Celda cel)
+    public Tablero() 
+    {
+        fils = 5;
+        cols = 4;
+        celdas = new ArrayList<>();
+    }
+
+    public void setDimensiones(int fils, int cols)
+    {
+        this.fils = fils;
+        this.cols = cols;
+    }
+
+    public void addCelda(Celda cel)
     {
         celdas.add(cel);
         celdas.trimToSize();

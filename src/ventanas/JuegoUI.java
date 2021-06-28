@@ -7,13 +7,12 @@ import jcomponents.JFileChooser1;
 import jcomponents.JFrame1;
 import jcomponents.JTextArea1;
 import tablero.Tablero;
+import tablero.celdas.*;
 
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
@@ -26,7 +25,7 @@ public class JuegoUI
 {
     static Vector<Jugador> vJugadores = new Vector<>();
     static JFileChooser1 fc = new JFileChooser1();
-    static Tablero tab;
+    static Tablero tablero = new Tablero();
 
     public static void main(String[] args) {
         menu1();
@@ -232,27 +231,32 @@ public class JuegoUI
         return null;
     }
 
-    void tomarAcciones(Pieza pieza)
+    void tomarAcciones(Pieza pieza, int[] nums)
     {
         switch(pieza.getPrefijo())
         {
             case "tablero(":
-
-            break;
+                tablero.setDimensiones(nums[0], nums[1]);
+                break;
             case "pierdeturno(":
-            break;
+                tablero.addCelda(new CeldaP(nums[0], nums[1]));
+                break;
             case "tiradados(":
-            break;
+                tablero.addCelda(new CeldaD(nums[0], nums[1]));
+                break;
             case "avanza(":
-            break;
+                tablero.addCelda(new CeldaA(nums[0], nums[1], nums[2]));
+                break;
             case "retrocede(":
-            break;
+                tablero.addCelda(new CeldaR(nums[0], nums[1], nums[2]));
+                break;
             case "subida(":
-            break;
+                tablero.addCelda(new CeldaS(nums[0], nums[1], nums[2], nums[3]));
+                break;
             case "bajada(":
-            break;
+                tablero.addCelda(new CeldaB(nums[0], nums[1], nums[2], nums[3]));
+                break;
         }
-        
     }
 
     static Pieza[] aLineas = 

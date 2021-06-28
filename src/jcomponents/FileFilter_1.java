@@ -37,14 +37,12 @@ public class FileFilter_1 extends FileFilter
         }
         else
         {
-            int index = 0;
-            while (index < extensions.length)
+            for(int i = 0; i < extensions.length; i = i + 1)
             {
-                if (f.getName().endsWith(extension(index)))
+                if (f.getName().endsWith(extension(i)))
                 {
                     return true;
                 }
-                index = index + 1;
             }
             return false;
         }

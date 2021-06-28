@@ -20,6 +20,11 @@ public class TableroGUI
     {
     }
 
+    void turnas()
+    {
+
+    }
+
     void manejarTurno(Turno tur)
     {
         if(!tur.getPerdioTurno())
@@ -52,7 +57,7 @@ public class TableroGUI
             tur.setPerdioTurno(false);
         }
         // dependiendo si !pierdeTurno hacer
-        // se muestra tirar dados
+        // muestrar tirar dados
         // devolver celda destino
         // mostrar destino 2, si hay
         // si condicion es repetir turno, volver a tirar dados
@@ -91,6 +96,18 @@ public class TableroGUI
         dDado.add(taResultado);
         dDado.sizeSettings(true, 240, 120);
         dDado.locationSettings();
+    }
+
+    int faltante(Celda cel)
+    {
+        // celdas para terminar fila actual
+        int num1 = cel.getFil() % 2 == 0 ? cols - 1 - cel.getCol() : cel.getCol();
+        // filas para estar en la ultima fila o (filaActual,filaFinal] o [filaActual+1,filaFinal]
+        int num2 = fils - 1 - cel.getFil();
+        // celdas en (filaActual,filaFinal]
+        int num3 = num2 * cols;
+        // total de celdas para llegar a la celda final
+        return num1 + num3;
     }
 
     // cels: celdas a mover, ori: celda origen, desde donde se mueve la ficha
@@ -236,4 +253,38 @@ public class TableroGUI
         fGrid.sizeSettings(true, 500, 500);
         fGrid.locationSettings();
     }
+
+    void turnar(Turno tur)
+    {
+        if(!tur.getPerdioTurno())
+        {
+            // cambiamos color de celda actual
+            cambiarColor(tur.getCelda(), tur.getColor());
+            // mostramos el resultado de los dados
+            int cels1 = Extras.dado(1, 6);
+            int cels2 = Extras.dado(1, 6);
+            mensajeDados(cels1, cels2);
+            // des-tino de ficha despues de tirar dados
+            Celda des1 = destino1(cels1 + cels2, tur.getCelda());
+            // despintamos la celda anterior y pintamos des1
+            cambiarColor(tur.getCelda());
+            cambiarColor(des1, tur.getColor());
+            // des-tino-2 de ficha SI des1 mueve la ficha
+            // aqui ajustamos nuevo valor en tur.setCelda(des2)
+            Celda des2 = destino2(des1, tur);
+            // despintamos des1 y pintamos des2
+            cambiarColor(des1);
+            cambiarColor(des2, tur.getColor());
+            if(tur.getGanoTurno())
+            {
+                tur.setGanoTurno(false);
+                manejarTurno(tur);
+            }
+        }
+        else
+        {
+            tur.setPerdioTurno(false);
+        }
+    }
+
 }

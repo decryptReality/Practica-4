@@ -173,7 +173,7 @@ public class JuegoUI
                 Scanner scanner = new Scanner(txt);
                 while (scanner.hasNextLine()) 
                 {
-                    // acortar cada linea
+                    // acortar linea
                     String linea1 = scanner.nextLine().trim();
                     // verificar el su contenido **** TEMPORAL ****
                     System.out.println(linea1);
@@ -189,14 +189,26 @@ public class JuegoUI
                         // asegurar que cantidad de parametros en correcta
                         if(params.length == pieza.getParametros())
                         {
+                            // array de tipo int para guardar parametros
+                            int[] nums = new int[params.length];
                             for(int i = 0; i < aLineas.length; i = i + 1)
                             {
+                                // recortar espacios en extremos de cada parametro
                                 params[i] = params[i].trim();
-                                // verificar su contenido *** TEMPORAL ***
-                                System.out.println("    " + params[i]);
+                                try 
+                                {
+                                    // convertir parametros de String a int
+                                    nums[i] = Integer.parseInt(params[i]);
+                                    // verificar contenido *** TEMPORAL ***
+                                    System.out.println("    " + nums[i]);
+                                } 
+                                catch (Exception e) 
+                                {
+                                    System.out.println("[!] Linea erronea");
+                                    // si alguin parametro no es de tipo int: evaluar otra linea
+                                    continue;
+                                }
                             }
-                    
-                            
                         }
                     }
                 }
@@ -218,6 +230,29 @@ public class JuegoUI
             }
         }
         return null;
+    }
+
+    void tomarAcciones(Pieza pieza)
+    {
+        switch(pieza.getPrefijo())
+        {
+            case "tablero(":
+
+            break;
+            case "pierdeturno(":
+            break;
+            case "tiradados(":
+            break;
+            case "avanza(":
+            break;
+            case "retrocede(":
+            break;
+            case "subida(":
+            break;
+            case "bajada(":
+            break;
+        }
+        
     }
 
     static Pieza[] aLineas = 

@@ -126,3 +126,17 @@ array de
             celda actual
             penalizaciones
                 perder turno: usar if(pierdeTurno){continue}
+
+
+leer TXT
+    se lee la linea completa
+    se eliminan espacios de sus extremos
+    se separan los parametros
+        de primera letra a ultima, sin parentesis
+    a cada parametro se recortan espacios en extremos
+    try {leer parametros como Integer} catch{continue keyword saltar la iteracion}
+    toda esa informacion se guarda en un objeto tablero
+
+
+
+    

@@ -16,13 +16,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Scanner;
 import java.util.Vector;
 
 import esencial.Jugador;
 
 public class JuegoUI 
 {
-    static Vector<Jugador> vJugadores;
+    static Vector<Jugador> vJugadores = new Vector<>();
     static JFileChooser1 fc = new JFileChooser1();
     static Tablero tab;
 
@@ -118,23 +119,20 @@ public class JuegoUI
     {
         fc.resetChoosableFileFilters();
         File dir = fc.getDirectory(null);
-        // este stream ya lleva el dir de salida (donde se guardaran los dats)
-        for(Jugador jugador : vJugadores)
-        {  
-            try 
+        if(dir != null)
+        {
+            for (Jugador jugador : vJugadores) 
             {
-                new ObjectOutputStream(new FileOutputStream(new File(dir, jugador.toString() + ".dat") )).writeObject(jugador);
-            } 
-            catch (FileNotFoundException e) 
-            {
-                e.printStackTrace();
-            } catch (IOException e) 
-            {
-                e.printStackTrace();
+                try 
+                {
+                    new ObjectOutputStream(new FileOutputStream(new File(dir, jugador.toString() + ".dat"))).writeObject(jugador);
+                } 
+                catch (Exception e) 
+                {
+                    System.out.println("[!] Error al guardar archivo .dat");
+                } 
             }
-
         }
-        
     }
 
     static void inputDAT()
@@ -151,11 +149,11 @@ public class JuegoUI
             {
                 try 
                 {
-                    Jugador j = (Jugador) new ObjectInputStream(new FileInputStream(dat)).readObject();
+                    vJugadores.add((Jugador) new ObjectInputStream(new FileInputStream(dat)).readObject());
                 } 
                 catch (Exception e) 
                 {
-                    System.out.println("[!] Archivo corrupto");
+                    System.out.println("[!] Archivo .dat corrupto");
                 }
             }
         }
@@ -163,8 +161,31 @@ public class JuegoUI
 
     static void inputTXT()
     {
+        String[] info = {"tablero(", "pierdeturno(", "tiradados(", "avanza(", "retrocede(", "subida(", "bajada("};
+
         fc.resetChoosableFileFilters();
         fc.setFilter(".txt", new String[] {"txt"});
+
         File txt = fc.getFile(null);
+        if(txt != null)
+        {
+            Scanner scanner;
+            try 
+            {
+                scanner = new Scanner(txt);
+                while (scanner.hasNextLine()) 
+                {
+                    // acortar cada linea
+                    String linea1 = scanner.nextLine().trim();
+                    // verificar el su contenido **** TEMPORAL ****
+                    System.out.println(linea1);
+                    
+                }
+            } 
+            catch (Exception e) 
+            {
+                System.out.println("[!] Error leyendo archivo .txt");
+            }
+        }
     }
 }

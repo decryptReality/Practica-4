@@ -6,10 +6,10 @@ import tablero.Celda;
 public class CeldaS extends Celda implements CeldaDes
 {
     // celda destino
-    int filB; 
-    int colB;
+    private int filB; 
+    private int colB;
     // celda des-tino
-    Celda des;
+    private Celda des;
 
     public CeldaS(int fil, int col, int filB, int colB) 
     {

@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Jugador implements Serializable
 {
     static final long serailVersionUID = 1L;
-    int id;
-    String nombre;
-    String apellido;
+    private int id;
+    private String nombre;
+    private String apellido;
     // partidas
-    int jugadas;
-    int ganadas;
-    int perdidas;
+    private int jugadas;
+    private int ganadas;
+    private int perdidas;
 
     public Jugador(int id, String nombre, String apellido, int jugadas, int ganadas, int perdidas) {
         this.id = id;

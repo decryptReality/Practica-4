@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Tablero 
 {
     // dimensiones del tablero
-    int fils;
-    int cols;
+    private int fils;
+    private int cols;
     // celdas especiales
-    ArrayList<Celda> celdas;
+    private ArrayList<Celda> celdas;
 
     public Tablero() 
     {

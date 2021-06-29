@@ -6,13 +6,13 @@ import tablero.Celda;
 
 public class Turno 
 {
-    Jugador jugador;
-    Celda celda;
+    private Jugador jugador;
+    private Celda celda;
     // color de ficha
-    Color color;
-    boolean perdioTurno = false;
-    boolean ganoTurno = false;
-    boolean ganoPartida = false;
+    private Color color;
+    private boolean perdioTurno = false;
+    private boolean ganoTurno = false;
+    private boolean ganoPartida = false;
 
     public Turno(Jugador jugador, Celda celda, Color cFicha) 
     {
@@ -23,10 +23,6 @@ public class Turno
 
     public Jugador getJugador() {
         return jugador;
-    }
-
-    public void setJugador(Jugador jugador) {
-        this.jugador = jugador;
     }
 
     public Celda getCelda() {

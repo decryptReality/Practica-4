@@ -6,9 +6,9 @@ import tablero.Celda;
 public class CeldaR extends Celda implements CeldaDes
 {
     // celdas que retrocede
-    int cels;
+    private int cels;
     // celda des-tino
-    Celda des;
+    private Celda des;
 
     public CeldaR(int fil, int col, int cels) 
     {

@@ -6,9 +6,9 @@ import tablero.Celda;
 public class CeldaA extends Celda implements CeldaDes
 {
     // celdas que avanza
-    int cels;
+    private int cels;
     // celda des-tino
-    Celda des;
+    private Celda des;
 
     public CeldaA(int fil, int col, int cels) 
     {
@@ -17,7 +17,7 @@ public class CeldaA extends Celda implements CeldaDes
         int num1 = fil % 2 == 0 ? col + cels : col - cels;
         des = new Celda(fil, num1);
     }
-    
+
     @Override
     public Celda getDes() {
         return des;

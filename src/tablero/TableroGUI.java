@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-import esencial.Jugador;
 import esencial.Turno;
 import jcomponents.*;
 import tablero.celdas.*;
@@ -122,7 +122,8 @@ public class TableroGUI
             }
             else
             {
-                mostrarMensaje("[?] EL GANADOR ES " + tur.getJugador().getNombre() + " " + tur.getJugador().getApellido(), "HA LLEGADO A LA CELDA FINAL");   
+                String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
+                mostrarMensaje("[?] EL GANADOR ES " + info, "HA LLEGADO A LA CELDA FINAL", tur);   
                 for(Turno turn : alTurnos)
                 {
                     if(!turn.getGanoPartida())
@@ -153,12 +154,13 @@ public class TableroGUI
     void mensajeDados(int cels1, int cels2, Turno tur)
     {
         String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
-        JButton1 bDado1 = new JButton1("DADO-1", 100, 25);
-        JButton1 bDado2 = new JButton1("DADO-2", 100, 25);
-        JTextArea1 taResultado = new JTextArea1(false, 200, 60);
+        JLabel1 taColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
+        JButton1 bDado1 = new JButton1("DADO-1", 100, 26);
+        JButton1 bDado2 = new JButton1("DADO-2", 100, 26);
+        JTextArea1 taResultado = new JTextArea1(false, 200, 52);
 
+        taColor.setBackground(tur.getColor());
         taResultado.lineWrapSettings(true);
-        taResultado.append("[?] " + info + "\n");
 
         bDado1.addActionListener(new ActionListener() 
         {
@@ -181,10 +183,11 @@ public class TableroGUI
         }
         );
         JDialog1 dDado = new JDialog1("TIRAR DADOS", (JDialog1) null, true);
+        dDado.add(taColor);
         dDado.add(bDado1);
         dDado.add(bDado2);
         dDado.add(taResultado);
-        dDado.sizeSettings(true, 240, 150);
+        dDado.sizeSettings(true, 240, 140);
         dDado.locationSettings();
     }
 
@@ -228,7 +231,7 @@ public class TableroGUI
     Celda destino2(Celda celA, Turno tur)
     {
         String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido() ;
-        mostrarMensaje("[?] " + info + " LLEGO A " + celA.toString(), "POR DADOS");
+        mostrarMensaje("[?] " + info + " LLEGO A " + celA.toString(), "POR DADOS", tur);
         // mostrar mensaje segun celda especial
         String mensaje = "[?] QUEDARA EN LA MISMA CELDA";
         Celda celB = aCeldas[celA.getFil()][celA.getCol()];
@@ -265,20 +268,25 @@ public class TableroGUI
             mensaje = "[!] PERDIO SU PROXIMO TURNO";
         }
         tur.setCelda(celB);
-        mostrarMensaje(info + "\n" + mensaje, "POR CELDA ESPECIAL");
+        mostrarMensaje(info + "\n" + mensaje, "POR CELDA ESPECIAL", tur);
         return celB;
     }
 
-    void mostrarMensaje(String mensaje, String title)
+    void mostrarMensaje(String mensaje, String title, Turno tur)
     {
+        String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
+        JLabel1 lColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
         JTextArea1 taResultado = new JTextArea1(false, 200, 40);
+
+        lColor.setBackground(tur.getColor());
         taResultado.lineWrapSettings(true);
         taResultado.append(mensaje);
 
         JDialog1 dDado = new JDialog1(title, (JDialog1) null, true);
+        dDado.add(lColor);
         dDado.add(taResultado);
 
-        dDado.sizeSettings(true, 240, 120);
+        dDado.sizeSettings(true, 240, 150);
         dDado.locationSettings();
     }
 

@@ -3,9 +3,9 @@ package instrumentos;
 public class Pieza
 {
     // letras con las que inicia la linea
-    String prefijo;
+    private String prefijo;
     // cantidad de parametros
-    int parametros;
+    private int parametros;
     
     public Pieza(String prefijo, int parametros) {
         this.prefijo = prefijo;

@@ -19,6 +19,7 @@ public class TableroGUI
     int fils;
     int cols;
 
+    // R E V I S A D O
     public TableroGUI(Tablero tab, ArrayList<Turno> alTurnos)
     {
         fils = tab.getFils();
@@ -37,7 +38,7 @@ public class TableroGUI
             }    
         }
 
-        // aqui colocamos subtipos de la clase celda
+        // aqui colocamos subtipos de la clase celda (celdas especiales)
         for(Celda celda : tab.getCeldas())
         {
             int i = celda.getFil();
@@ -46,6 +47,7 @@ public class TableroGUI
         }
     }
 
+    // R E V I S A D O, C O N  D U D A S
     // void crearUI(int fils, int cols)
     public void crearUI()
     {
@@ -57,19 +59,20 @@ public class TableroGUI
         {
             for(int j = 0; j < cols; j = j + 1)
             {
-                aBotones[i][j] = new JButton1(i + "," + j, 30, 30);
+                aBotones[i][j] = new JButton1(i + "," + j, 50, 50);
                 aBotones[i][j].setBackground(new Color(238,238,238));
                 aBotones[i][j].setMargin(new Insets(1, 1, 1, 1));
                 // botones[i][j].setBorderPainted(false);
                 pGrid.add(aBotones[i][j]);
             }    
         }
-        JFrame1 fGrid = new JFrame1("SERPIENTES Y ESCALERAS");
+        JDialog1 fGrid = new JDialog1("PARTIDA", (JDialog1) null, false);
         fGrid.add(pGrid);
-        fGrid.sizeSettings(true, 500, 500);
+        fGrid.sizeSettings(true);
         fGrid.locationSettings();
     }
 
+    // REVISADO, CON DUDAS
     public void turnar()
     {
         boolean hayGanador = false;
@@ -87,6 +90,7 @@ public class TableroGUI
         }
     }
 
+    // 
     void manejarTurno(Turno tur)
     {
         if(!tur.getPerdioTurno())
@@ -118,7 +122,7 @@ public class TableroGUI
             }
             else
             {
-                mostrarMensaje("[?] HA LLEGADO A LA CELDA FINAL, EL GANADOR ES " + tur.getJugador().getNombre() + " " + tur.getJugador().getApellido());   
+                mostrarMensaje("[?] EL GANADOR ES " + tur.getJugador().getNombre() + " " + tur.getJugador().getApellido(), "HA LLEGADO A LA CELDA FINAL");   
                 for(Turno turn : alTurnos)
                 {
                     if(!turn.getGanoPartida())
@@ -159,7 +163,7 @@ public class TableroGUI
             public void actionPerformed(ActionEvent e) 
             {
                 bDado1.setEnabled(false);
-                taResultado.append("Dado-1: " + cels1 + "\n");
+                taResultado.append("DADO-1: " + cels1 + "\n");
             }
         }
         );
@@ -169,11 +173,11 @@ public class TableroGUI
             public void actionPerformed(ActionEvent e) 
             {
                 bDado2.setEnabled(false);
-                taResultado.append("Dado-2: " + cels2 + "\n");
+                taResultado.append("DADO-2: " + cels2 + "\n");
             }
         }
         );
-        JDialog1 dDado = new JDialog1("TIRAR DADOS", (JDialog1) null, false);
+        JDialog1 dDado = new JDialog1("TIRAR DADOS", (JDialog1) null, true);
         dDado.add(bDado1);
         dDado.add(bDado2);
         dDado.add(taResultado);
@@ -220,8 +224,9 @@ public class TableroGUI
 
     Celda destino2(Celda celA, Turno tur)
     {
-        mostrarMensaje("[?] LLEGO A " + celA.toString());
-        String mensaje = "";
+        mostrarMensaje("[?] " + tur.getJugador().getNombre() + " " + tur.getJugador().getApellido() + " LLEGO A " + celA.toString(), "POR DADOS");
+        // mostrar mensaje segun celda especial
+        String mensaje = "[?] QUEDARA EN LA MISMA CELDA";
         Celda celB = aCeldas[celA.getFil()][celA.getCol()];
         if(celB instanceof CeldaA)
         {
@@ -256,17 +261,17 @@ public class TableroGUI
             mensaje = "[!] PERDIO SU PROXIMO TURNO";
         }
         tur.setCelda(celB);
-        mostrarMensaje(mensaje);
+        mostrarMensaje(mensaje, "POR CELDA ESPECIAL");
         return celB;
     }
 
-    void mostrarMensaje(String text)
+    void mostrarMensaje(String mensaje, String title)
     {
         JTextArea1 taResultado = new JTextArea1(false, 200, 40);
         taResultado.lineWrapSettings(true);
-        taResultado.append(text);
+        taResultado.append(mensaje);
 
-        JDialog1 dDado = new JDialog1("CELDA DESTINO", (JDialog1) null, false);
+        JDialog1 dDado = new JDialog1(title, (JDialog1) null, true);
         dDado.add(taResultado);
 
         dDado.sizeSettings(true, 240, 120);

@@ -26,8 +26,7 @@ public class JuegoUI
     static Tablero tablero = new Tablero();
 
     public static void main(String[] args) {
-        //menu1();
-        inputTXT();
+        menu1();
     }
 
     static void menu1()
@@ -66,9 +65,9 @@ public class JuegoUI
 
     static void menuJugadores()
     {
-        JTextArea1 taIns = new JTextArea1(false, 280, 50);
+        JTextArea1 taIns = new JTextArea1(false, 280, 70);
         taIns.lineWrapSettings(true);
-        String mensaje = "CARGUE O GUARDE A LOS JUGADORES CON ARCHIVOS DAT, AGREGUE UN JUGADOR, LISTE A LOS JUGADORES, LIMPIE LA LISTA DE JUGADORES";
+        String mensaje = "CARGUE O GUARDE A LOS JUGADORES CON ARCHIVOS DAT, AGREGUE UN JUGADOR, LIMPIE LA LISTA DE JUGADORES, LISTE A LOS JUGADORES";
         taIns.append(mensaje);
 
         JButton1 bCargar = new JButton1("CARGAR", 140, 26);
@@ -129,7 +128,7 @@ public class JuegoUI
             }
         );
 
-        JDialog1 dMenu = new JDialog1("SERPIENTES Y ESCALERAS", (JDialog1) null, false);
+        JDialog1 dMenu = new JDialog1("JUGADORES", (JDialog1) null, false);
         dMenu.add(taIns);
         dMenu.add(bCargar);
         dMenu.add(bGuardar);
@@ -137,7 +136,7 @@ public class JuegoUI
         dMenu.add(bLimpiar);
         dMenu.add(bListar);
 
-        dMenu.sizeSettings(true, 330, 200);
+        dMenu.sizeSettings(true, 330, 220);
         dMenu.locationSettings();
     }
 
@@ -150,10 +149,10 @@ public class JuegoUI
         JScrollPane spLista = new JScrollPane(lista);
         spLista.setPreferredSize(new Dimension(340, 200));
         
-        JDialog1 dialog = new JDialog1("ELEGIR JUGADORES", (JDialog1) null, false);
+        JDialog1 dialog = new JDialog1("LISTAR JUGADORES", (JDialog1) null, false);
         dialog.add(label);
         dialog.add(spLista);
-        dialog.sizeSettings(true, 400, 290);
+        dialog.sizeSettings(true, 400, 310);
         dialog.locationSettings();
     }
 

@@ -12,6 +12,11 @@ public class JFrame1 extends JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    public void sizeSettings(boolean resize)
+    {
+        pack();
+        setResizable(resize);
+    }
     public void sizeSettings(boolean resize, int width, int height)
     {
         setSize(width, height);

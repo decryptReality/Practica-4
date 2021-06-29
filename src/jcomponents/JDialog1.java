@@ -23,6 +23,11 @@ public class JDialog1 extends JDialog
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
+    public void sizeSettings(boolean resize)
+    {
+        pack();
+        setResizable(resize);
+    }
     public void sizeSettings(boolean resize, int width, int height)
     {
         setSize(width, height);

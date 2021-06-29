@@ -24,29 +24,29 @@ public class JuegoUI
     static Tablero tablero = new Tablero();
 
     public static void main(String[] args) {
-        agregarJugador();
+        menu1();
     }
 
     static void menu1()
     {
         JButton1 bJugar = new JButton1("JUGAR", 140, 25);
-        JButton1 bJugador = new JButton1("JUGADORES", 140, 25);
+        JButton1 bJugadores = new JButton1("JUGADORES", 140, 25);
 
         JFrame1 dMenu = new JFrame1("SERPIENTES Y ESCALERAS");
 
         dMenu.add(bJugar);
-        dMenu.add(bJugador);
+        dMenu.add(bJugadores);
         bJugar.addActionListener(
             new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-
+                    elegirJugadores();
                 }
             }
         );
-        bJugador.addActionListener(
+        bJugadores.addActionListener(
             new ActionListener()
             {
                 @Override
@@ -61,49 +61,6 @@ public class JuegoUI
         dMenu.locationSettings();
     } 
 
-    static void agregarJugador()
-    {    
-        JLabel1 lID = new JLabel1("ID", SwingConstants.LEFT, 70, 26);
-        JTextField1 tfID = new JTextField1(180, 26);
-        JLabel1 lNombre = new JLabel1("NOMBRE", SwingConstants.LEFT, 70, 26);
-        JTextField1 tfNombre = new JTextField1(180, 26);
-        JLabel1 lApellido = new JLabel1("APELLIDO", SwingConstants.LEFT, 70, 26);
-        JTextField1 tfApellido = new JTextField1(180, 26);
-        JButton1 bGuardar = new JButton1("GUARDAR", 140, 26);
-        
-        bGuardar.addActionListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent ae) 
-            {
-                try 
-                {
-                    int id = Integer.parseInt(tfID.getText().trim());
-                    String nombre = tfNombre.getText();
-                    String apellido = tfApellido.getText();
-                    vJugadores.add(new Jugador(id, nombre, apellido, 0, 0, 0));
-                    elegirJugadores();
-                } 
-                catch (Exception e) 
-                {
-                    System.out.println("[!] ID incorrecto");
-                }
-            }
-        });
-
-        JDialog1 dialog = new JDialog1("AGREGAR JUGADOR", (JDialog1) null, false);
-        dialog.add(lID);
-        dialog.add(tfID);
-        dialog.add(lNombre);
-        dialog.add(tfNombre);
-        dialog.add(lApellido);
-        dialog.add(tfApellido);
-        dialog.add(bGuardar);
-
-        dialog.sizeSettings(true, 310, 170);
-        dialog.locationSettings();
-    }
-    
     static void menuJugadores()
     {
         JTextArea1 taIns = new JTextArea1(false, 280, 50);
@@ -155,6 +112,105 @@ public class JuegoUI
         dMenu.locationSettings();
     }
 
+    static void elegirJugadores()
+    {
+        JLabel1 label = new JLabel1("ID-JUGADAS.GANADAS.PERDIDAS-NOMBRE.APELLIDO", SwingConstants.CENTER, 340, 26);
+        JList lista = new JList<>(vJugadores);
+        lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane spLista = new JScrollPane(lista);
+        spLista.setPreferredSize(new Dimension(340, 200));
+
+        JButton1 bElegir = new JButton1("ELEGIR", 140, 26);
+
+        bElegir.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    bElegir.setEnabled(false);
+                    inputTXT();
+                    lista.getSelectedValuesList();
+                }
+            }
+        );
+        
+        JDialog1 dialog = new JDialog1("ELEGIR JUGADORES", (JDialog1) null, false);
+        dialog.add(label);
+        dialog.add(spLista);
+        dialog.add(bElegir);
+        dialog.sizeSettings(true, 400, 310);
+        dialog.locationSettings();
+    }
+
+    static void inputTXT()
+    {
+        fc.resetChoosableFileFilters();
+        fc.setFilter(".txt", new String[] {"txt"});
+
+        File txt = fc.getFile(null);
+        if(txt != null)
+        {
+            try 
+            {
+                Scanner scanner = new Scanner(txt);
+                while (scanner.hasNextLine()) 
+                {
+                    // acortar linea
+                    String linea1 = scanner.nextLine().trim();
+                    // verificar el su contenido **** TEMPORAL ****
+                    System.out.println(linea1);
+
+                    // verificamos si la linea empieza con algun prefijo y termina con ")"
+                    Pieza pieza = getPieza(linea1);
+                    if(pieza != null)
+                    {
+                        // extraer parametros de linea1
+                        String linea2 = linea1.substring(pieza.getPrefijo().length(), linea1.length() - 1);
+                        // seperar los parametros
+                        String[] params = linea2.split(",");
+                        // asegurar que cantidad de parametros en correcta
+                        if(params.length == pieza.getParametros())
+                        {
+                            // array de tipo int para guardar parametros
+                            int[] nums = new int[params.length];
+                            for(int i = 0; i < aPiezas.length; i = i + 1)
+                            {
+                                // recortar espacios en extremos de cada parametro
+                                params[i] = params[i].trim();
+                                try 
+                                {
+                                    // convertir parametros de String a int
+                                    nums[i] = Integer.parseInt(params[i]);
+                                    // verificar contenido *** TEMPORAL ***
+                                    System.out.println("    " + nums[i]);
+                                } 
+                                catch (Exception e) 
+                                {
+                                    System.out.println("[!] Linea erronea");
+                                    // si alguin parametro no es de tipo int: evaluar otra linea
+                                    continue;
+                                }
+                            }
+                            tomarAcciones(pieza, nums);
+                        }
+                    }
+                }
+            } 
+            catch (Exception e) 
+            {
+                System.out.println("[!] Error leyendo archivo .txt");
+            }
+        }
+    }
+
+    static void iniciarPartida()
+    {
+        ArrayList<Turno> turnos = new ArrayList<>();
+
+        TableroGUI partida = new TableroGUI(tablero, turnos);
+    }
+
     static void outputDAT()
     {
         fc.resetChoosableFileFilters();
@@ -199,114 +255,59 @@ public class JuegoUI
         }
     }
 
-    static void inputTXT()
-    {
-        fc.resetChoosableFileFilters();
-        fc.setFilter(".txt", new String[] {"txt"});
-
-        File txt = fc.getFile(null);
-        if(txt != null)
+    static void agregarJugador()
+    {    
+        JLabel1 lID = new JLabel1("ID", SwingConstants.LEFT, 70, 26);
+        JTextField1 tfID = new JTextField1(180, 26);
+        JLabel1 lNombre = new JLabel1("NOMBRE", SwingConstants.LEFT, 70, 26);
+        JTextField1 tfNombre = new JTextField1(180, 26);
+        JLabel1 lApellido = new JLabel1("APELLIDO", SwingConstants.LEFT, 70, 26);
+        JTextField1 tfApellido = new JTextField1(180, 26);
+        JButton1 bGuardar = new JButton1("GUARDAR", 140, 26);
+        
+        bGuardar.addActionListener(new ActionListener() 
         {
-            try 
+            @Override
+            public void actionPerformed(ActionEvent ae) 
             {
-                Scanner scanner = new Scanner(txt);
-                while (scanner.hasNextLine()) 
+                try 
                 {
-                    // acortar linea
-                    String linea1 = scanner.nextLine().trim();
-                    // verificar el su contenido **** TEMPORAL ****
-                    System.out.println(linea1);
-
-                    // verificamos si la linea empieza con algun prefijo y termina con ")"
-                    Pieza pieza = getPieza(linea1);
-                    if(pieza != null)
-                    {
-                        // extraer parametros de linea1
-                        String linea2 = linea1.substring(pieza.getPrefijo().length(), linea1.length() - 1);
-                        // seperar los parametros
-                        String[] params = linea2.split(",");
-                        // asegurar que cantidad de parametros en correcta
-                        if(params.length == pieza.getParametros())
-                        {
-                            // array de tipo int para guardar parametros
-                            int[] nums = new int[params.length];
-                            for(int i = 0; i < aLineas.length; i = i + 1)
-                            {
-                                // recortar espacios en extremos de cada parametro
-                                params[i] = params[i].trim();
-                                try 
-                                {
-                                    // convertir parametros de String a int
-                                    nums[i] = Integer.parseInt(params[i]);
-                                    // verificar contenido *** TEMPORAL ***
-                                    System.out.println("    " + nums[i]);
-                                } 
-                                catch (Exception e) 
-                                {
-                                    System.out.println("[!] Linea erronea");
-                                    // si alguin parametro no es de tipo int: evaluar otra linea
-                                    continue;
-                                }
-                            }
-                            tomarAcciones(pieza, nums);
-                        }
-                    }
+                    int id = Integer.parseInt(tfID.getText().trim());
+                    String nombre = tfNombre.getText();
+                    String apellido = tfApellido.getText();
+                    vJugadores.add(new Jugador(id, nombre, apellido, 0, 0, 0));
+                    elegirJugadores();
+                } 
+                catch (Exception e) 
+                {
+                    System.out.println("[!] ID incorrecto");
                 }
-            } 
-            catch (Exception e) 
-            {
-                System.out.println("[!] Error leyendo archivo .txt");
             }
-        }
-    }
+        });
 
+        JDialog1 dialog = new JDialog1("AGREGAR JUGADOR", (JDialog1) null, false);
+        dialog.add(lID);
+        dialog.add(tfID);
+        dialog.add(lNombre);
+        dialog.add(tfNombre);
+        dialog.add(lApellido);
+        dialog.add(tfApellido);
+        dialog.add(bGuardar);
+
+        dialog.sizeSettings(true, 310, 170);
+        dialog.locationSettings();
+    }
+        
     static Pieza getPieza(String linea)
     {
-        for(int i = 0; i < aLineas.length; i = i + 1)
+        for(int i = 0; i < aPiezas.length; i = i + 1)
         {
-            if(linea.startsWith(aLineas[i].getPrefijo()) & linea.endsWith(")"))
+            if(linea.startsWith(aPiezas[i].getPrefijo()) & linea.endsWith(")"))
             {
-                return aLineas[i];
+                return aPiezas[i];
             }
         }
         return null;
-    }
-
-    static void elegirJugadores()
-    {
-        JLabel1 label = new JLabel1("ID-JUGADAS.GANADAS.PERDIDAS-NOMBRE.APELLIDO", SwingConstants.CENTER, 300, 26);
-        JList lista = new JList<>(vJugadores);
-        lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        JScrollPane spLista = new JScrollPane(lista);
-        spLista.setPreferredSize(new Dimension(340, 200));
-
-        JButton1 bElegir = new JButton1("ELEGIR", 140, 26);
-
-        bElegir.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e) 
-                {
-                    bElegir.setEnabled(false);
-                    lista.getSelectedValuesList();
-                }
-            }
-        );
-        
-        JDialog1 dialog = new JDialog1("ELEGIR JUGADORES", (JDialog1) null, false);
-        dialog.add(label);
-        dialog.add(spLista);
-        dialog.add(bElegir);
-        dialog.sizeSettings(true, 400, 310);
-        dialog.locationSettings();
-    }
-
-    static void iniciarPartida()
-    {
-        ArrayList<Turno> turnos = new ArrayList<>();
-
-        TableroGUI partida = new TableroGUI(tablero, turnos);
     }
 
     static void tomarAcciones(Pieza pieza, int[] nums)
@@ -337,7 +338,7 @@ public class JuegoUI
         }
     }
 
-    static Pieza[] aLineas = 
+    static Pieza[] aPiezas = 
     {
         new Pieza("tablero(", 2), 
         new Pieza("pierdeturno(", 2), 

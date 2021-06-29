@@ -19,7 +19,6 @@ public class TableroGUI
     int fils;
     int cols;
 
-    // estos parametros estan en el objeto tablero, cambiar a UN parametro tablero
     public TableroGUI(Tablero tab, ArrayList<Turno> alTurnos)
     {
         fils = tab.getFils();
@@ -47,7 +46,8 @@ public class TableroGUI
         }
     }
 
-    void crearUI(int fils, int cols)
+    // void crearUI(int fils, int cols)
+    public void crearUI()
     {
         JPanel pGrid = new JPanel();
         pGrid.setLayout(new GridLayout(fils, cols));
@@ -70,7 +70,7 @@ public class TableroGUI
         fGrid.locationSettings();
     }
 
-    void turnar()
+    public void turnar()
     {
         boolean hayGanador = false;
         while(!hayGanador)

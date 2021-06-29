@@ -26,7 +26,8 @@ public class JuegoUI
     static Tablero tablero = new Tablero();
 
     public static void main(String[] args) {
-        menu1();
+        //menu1();
+        inputTXT();
     }
 
     static void menu1()
@@ -272,25 +273,25 @@ public class JuegoUI
                         {
                             // array de tipo int para guardar parametros
                             int[] nums = new int[params.length];
-                            for(int i = 0; i < aPiezas.length; i = i + 1)
+                            try 
                             {
-                                // recortar espacios en extremos de cada parametro
-                                params[i] = params[i].trim();
-                                try 
+                                for (int i = 0; i < nums.length; i = i + 1) 
                                 {
+                                    // recortar espacios en extremos de cada parametro
+                                    params[i] = params[i].trim();
                                     // convertir parametros de String a int
                                     nums[i] = Integer.parseInt(params[i]);
                                     // verificar contenido *** TEMPORAL ***
                                     System.out.println("    " + nums[i]);
-                                } 
-                                catch (Exception e) 
-                                {
-                                    System.out.println("[!] Linea erronea");
-                                    // si alguin parametro no es de tipo int: evaluar otra linea
-                                    continue;
                                 }
+                                tomarAcciones(pieza, nums);
+                            } 
+                            catch (Exception e) 
+                            {
+                                System.out.println("[!] Linea erronea");
+                                // si alguin parametro no es de tipo int: evaluar otra linea
+                                // continue;
                             }
-                            tomarAcciones(pieza, nums);
                         }
                     }
                 }
@@ -302,11 +303,13 @@ public class JuegoUI
         }
     }
 
+    // turnos para partidas, en elegirJugadores() se limpia y llena de nueno
     static ArrayList<Turno> alTurnos = new ArrayList<>();
-
     static void iniciarPartida()
     {
         TableroGUI partida = new TableroGUI(tablero, alTurnos);
+        partida.crearUI();
+        partida.turnar();
     }
 
     static void outputDAT()

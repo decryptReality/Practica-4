@@ -3,7 +3,7 @@ package tablero.celdas;
 import tablero.Celda;
 
 // celda S-ubir
-public class CeldaS extends Celda
+public class CeldaS extends Celda implements CeldaDes
 {
     // celda destino
     int filB; 
@@ -19,6 +19,7 @@ public class CeldaS extends Celda
         des = new Celda(filB, colB);
     }    
     
+    @Override
     public Celda getDes() {
         return des;
     }

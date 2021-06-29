@@ -100,7 +100,7 @@ public class TableroGUI
             // mostramos el resultado de los dados
             int cels1 = Extras.dado(1, 6);
             int cels2 = Extras.dado(1, 6);
-            mensajeDados(cels1, cels2);
+            mensajeDados(cels1, cels2, tur);
             if(cels1 + cels2 < faltante(tur.getCelda()))
             {
                 // des-tino de ficha despues de tirar dados
@@ -150,12 +150,15 @@ public class TableroGUI
         // si condicion es repetir turno, volver a tirar dados
     }
 
-    void mensajeDados(int cels1, int cels2)
+    void mensajeDados(int cels1, int cels2, Turno tur)
     {
+        String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
         JButton1 bDado1 = new JButton1("DADO-1", 100, 25);
         JButton1 bDado2 = new JButton1("DADO-2", 100, 25);
-        JTextArea1 taResultado = new JTextArea1(false, 200, 40);
+        JTextArea1 taResultado = new JTextArea1(false, 200, 60);
+
         taResultado.lineWrapSettings(true);
+        taResultado.append("[?] " + info + "\n");
 
         bDado1.addActionListener(new ActionListener() 
         {
@@ -181,7 +184,7 @@ public class TableroGUI
         dDado.add(bDado1);
         dDado.add(bDado2);
         dDado.add(taResultado);
-        dDado.sizeSettings(true, 240, 120);
+        dDado.sizeSettings(true, 240, 150);
         dDado.locationSettings();
     }
 
@@ -224,7 +227,8 @@ public class TableroGUI
 
     Celda destino2(Celda celA, Turno tur)
     {
-        mostrarMensaje("[?] " + tur.getJugador().getNombre() + " " + tur.getJugador().getApellido() + " LLEGO A " + celA.toString(), "POR DADOS");
+        String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido() ;
+        mostrarMensaje("[?] " + info + " LLEGO A " + celA.toString(), "POR DADOS");
         // mostrar mensaje segun celda especial
         String mensaje = "[?] QUEDARA EN LA MISMA CELDA";
         Celda celB = aCeldas[celA.getFil()][celA.getCol()];
@@ -261,7 +265,7 @@ public class TableroGUI
             mensaje = "[!] PERDIO SU PROXIMO TURNO";
         }
         tur.setCelda(celB);
-        mostrarMensaje(mensaje, "POR CELDA ESPECIAL");
+        mostrarMensaje(info + "\n" + mensaje, "POR CELDA ESPECIAL");
         return celB;
     }
 

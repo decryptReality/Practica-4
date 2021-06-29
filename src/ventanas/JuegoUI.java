@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -158,7 +159,7 @@ public class JuegoUI
     static void elegirJugadores()
     {
         JLabel1 label = new JLabel1("ID-JUGADAS.GANADAS.PERDIDAS-NOMBRE.APELLIDO", SwingConstants.CENTER, 340, 26);
-        JList lista = new JList<>(vJugadores);
+        JList<Jugador> lista = new JList<>(vJugadores);
         lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         JScrollPane spLista = new JScrollPane(lista);
@@ -171,24 +172,25 @@ public class JuegoUI
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-
                     bElegir.setEnabled(false);
                     // limpiar turnos para agregar otro conjunto de turnos
                     alTurnos.clear();
 
-                    List<Jugador> sel = lista.getSelectedValuesList();
-
-                    // los jugadores seleccionados deben ser al menos 2 y 6 o menos
-                    if (2 <= sel.size() & sel.size() <= 6) 
+                    // extraer jugadores seleccionados
+                    List<Jugador> sels = lista.getSelectedValuesList();
+                    
+                    // jugadores seleccionados deben ser minimo 2 y maximo 6
+                    if (2 <= sels.size() & sels.size() <= 6) 
                     {
                         // jugadores para partida
-                        ArrayList<Jugador> par = new ArrayList<>();
-                        par.addAll(sel);
-                        par.trimToSize();
-                        // verificar jugadores agregados
-                        for (Jugador jugador : par) 
+                        ArrayList<Jugador> part = new ArrayList<>();
+                        part.addAll(sels);
+                        part.trimToSize();
+                        // agregar turnos para partida
+                        for (Jugador jugador : part) 
                         {
                             alTurnos.add(new Turno(jugador, new Celda(0, 0), getColor()));
+                            // verificar jugadores agregados
                             System.out.println(jugador.toString());
                         }
                         // ingrear configuracion de tablero

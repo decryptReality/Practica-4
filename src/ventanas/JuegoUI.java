@@ -65,13 +65,15 @@ public class JuegoUI
     {
         JTextArea1 taIns = new JTextArea1(false, 280, 50);
         taIns.lineWrapSettings(true);
-        String mensaje = "CARGUE O GUARDE A LOS JUGADORES CON ARCHIVOS DAT O LISTE A LOS JUGADORES EN EL JUEGO";
+        String mensaje = "CARGUE O GUARDE A LOS JUGADORES CON ARCHIVOS DAT, AGREGUE UN JUGADOR, LISTE A LOS JUGADORES, LIMPIE LA LISTA DE JUGADORES";
         taIns.append(mensaje);
 
         JButton1 bCargar = new JButton1("CARGAR", 140, 26);
         JButton1 bGuardar = new JButton1("GUARDAR", 140, 26);
+        JButton1 bAgregar = new JButton1("AGREGAR", 140, 26);
+        JButton1 bLimpiar = new JButton1("LIMPIAR", 140, 26);
         JButton1 bListar = new JButton1("LISTAR", 140, 26);
-        // crear opcion de limpiar los jugadores del programa, en: listar > limpiar
+
         bCargar.addActionListener(
             new ActionListener()
             {
@@ -92,12 +94,34 @@ public class JuegoUI
                 }
             }
         );
+        bAgregar.addActionListener(
+            new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    agregarJugador();
+                }
+            }
+        );
+        bLimpiar.addActionListener(
+            new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    vJugadores.clear();
+                }
+            }
+        );
+
         bListar.addActionListener(
             new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
+                    listarJugadores();
                 }
             }
         );
@@ -106,10 +130,28 @@ public class JuegoUI
         dMenu.add(taIns);
         dMenu.add(bCargar);
         dMenu.add(bGuardar);
+        dMenu.add(bAgregar);
+        dMenu.add(bLimpiar);
         dMenu.add(bListar);
 
-        dMenu.sizeSettings(true, 330, 170);
+        dMenu.sizeSettings(true, 330, 200);
         dMenu.locationSettings();
+    }
+
+    static void listarJugadores()
+    {
+        JLabel1 label = new JLabel1("ID-JUGADAS.GANADAS.PERDIDAS-NOMBRE.APELLIDO", SwingConstants.CENTER, 340, 26);
+        JList lista = new JList<>(vJugadores);
+        lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane spLista = new JScrollPane(lista);
+        spLista.setPreferredSize(new Dimension(340, 200));
+        
+        JDialog1 dialog = new JDialog1("ELEGIR JUGADORES", (JDialog1) null, false);
+        dialog.add(label);
+        dialog.add(spLista);
+        dialog.sizeSettings(true, 400, 290);
+        dialog.locationSettings();
     }
 
     static void elegirJugadores()
@@ -129,8 +171,24 @@ public class JuegoUI
                 public void actionPerformed(ActionEvent e) 
                 {
                     bElegir.setEnabled(false);
-                    inputTXT();
-                    lista.getSelectedValuesList();
+                    List<Jugador> sel = lista.getSelectedValuesList();
+
+                    // los jugadores seleccionados deben ser al menos 2
+                    if (sel.size() >= 2) 
+                    {
+                        // jugadores para partida
+                        ArrayList<Jugador> par = new ArrayList<>();
+                        par.addAll(sel);
+                        par.trimToSize();
+                        // verificar jugadores agregados
+                        for (Jugador jugador : par) 
+                        {
+                            System.out.println(jugador.toString());
+                        }
+                        // ingrear configuracion de tablero
+                        inputTXT();
+                        iniciarPartida();
+                    }
                 }
             }
         );
@@ -204,11 +262,11 @@ public class JuegoUI
         }
     }
 
+    static ArrayList<Turno> alTurnos = new ArrayList<>();
+
     static void iniciarPartida()
     {
-        ArrayList<Turno> turnos = new ArrayList<>();
-
-        TableroGUI partida = new TableroGUI(tablero, turnos);
+        TableroGUI partida = new TableroGUI(tablero, alTurnos);
     }
 
     static void outputDAT()
@@ -276,7 +334,7 @@ public class JuegoUI
                     String nombre = tfNombre.getText();
                     String apellido = tfApellido.getText();
                     vJugadores.add(new Jugador(id, nombre, apellido, 0, 0, 0));
-                    elegirJugadores();
+                    //elegirJugadores();
                 } 
                 catch (Exception e) 
                 {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import esencial.Jugador;
+import esencial.Turno;
 import jcomponents.*;
 import tablero.celdas.*;
 import instrumentos.*;

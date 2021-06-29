@@ -4,7 +4,7 @@ import jcomponents.*;
 import tablero.*;
 import tablero.celdas.*;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
@@ -15,6 +15,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import esencial.Jugador;
+import esencial.Turno;
 import instrumentos.Pieza;
 
 public class JuegoUI 
@@ -170,11 +171,15 @@ public class JuegoUI
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
+
                     bElegir.setEnabled(false);
+                    // limpiar turnos para agregar otro conjunto de turnos
+                    alTurnos.clear();
+
                     List<Jugador> sel = lista.getSelectedValuesList();
 
-                    // los jugadores seleccionados deben ser al menos 2
-                    if (sel.size() >= 2) 
+                    // los jugadores seleccionados deben ser al menos 2 y 6 o menos
+                    if (2 <= sel.size() & sel.size() <= 6) 
                     {
                         // jugadores para partida
                         ArrayList<Jugador> par = new ArrayList<>();
@@ -183,6 +188,7 @@ public class JuegoUI
                         // verificar jugadores agregados
                         for (Jugador jugador : par) 
                         {
+                            alTurnos.add(new Turno(jugador, new Celda(0, 0), getColor()));
                             System.out.println(jugador.toString());
                         }
                         // ingrear configuracion de tablero
@@ -199,6 +205,38 @@ public class JuegoUI
         dialog.add(bElegir);
         dialog.sizeSettings(true, 400, 310);
         dialog.locationSettings();
+    }
+
+    static int iColor = 0;
+    static Color getColor()
+    {
+        iColor = iColor + 1;
+        if(iColor == 1)
+        {
+            return new Color(0, 255, 255);
+        }
+        if(iColor == 2)
+        {
+            return new Color(0, 255, 0);
+        }
+        if(iColor == 3)
+        {
+            return new Color(255, 255, 0);
+        }
+        if(iColor == 4)
+        {
+            return new Color(255, 0, 0);
+        }
+        if(iColor == 5)
+        {
+            return new Color(0, 0, 255);
+        }
+        if(iColor == 6)
+        {
+            iColor = 0;
+            return new Color(147, 147, 147);
+        }
+        return null;
     }
 
     static void inputTXT()

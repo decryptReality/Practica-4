@@ -1,7 +1,8 @@
-package tablero;
+package esencial;
 
 import java.awt.*;
-import esencial.Jugador;
+
+import tablero.Celda;
 
 public class Turno 
 {

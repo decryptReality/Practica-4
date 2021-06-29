@@ -11,4 +11,15 @@ public class JLabel1 extends JLabel
         super(text, position);
         setPreferredSize(new Dimension(width, height));
     }
+    public void backgroundSettings(int r, int g, int b)
+    {
+        setOpaque(true);
+        setBackground(new Color(r, g, b));
+    }
+    public void backgroundSettings(Color bg)
+    {
+        setOpaque(true);
+        setBackground(bg);
+    }
+
 }

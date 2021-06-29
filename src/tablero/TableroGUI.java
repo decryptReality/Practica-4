@@ -90,7 +90,6 @@ public class TableroGUI
         }
     }
 
-    // 
     void manejarTurno(Turno tur)
     {
         if(!tur.getPerdioTurno())
@@ -154,12 +153,12 @@ public class TableroGUI
     void mensajeDados(int cels1, int cels2, Turno tur)
     {
         String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
-        JLabel1 taColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
+        JLabel1 lColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
         JButton1 bDado1 = new JButton1("DADO-1", 100, 26);
         JButton1 bDado2 = new JButton1("DADO-2", 100, 26);
         JTextArea1 taResultado = new JTextArea1(false, 200, 52);
 
-        taColor.setBackground(tur.getColor());
+        lColor.backgroundSettings(tur.getColor());
         taResultado.lineWrapSettings(true);
 
         bDado1.addActionListener(new ActionListener() 
@@ -183,7 +182,7 @@ public class TableroGUI
         }
         );
         JDialog1 dDado = new JDialog1("TIRAR DADOS", (JDialog1) null, true);
-        dDado.add(taColor);
+        dDado.add(lColor);
         dDado.add(bDado1);
         dDado.add(bDado2);
         dDado.add(taResultado);
@@ -230,8 +229,7 @@ public class TableroGUI
 
     Celda destino2(Celda celA, Turno tur)
     {
-        String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido() ;
-        mostrarMensaje("[?] " + info + " LLEGO A " + celA.toString(), "POR DADOS", tur);
+        mostrarMensaje("LLEGO A " + celA.toString(), "POR DADOS", tur);
         // mostrar mensaje segun celda especial
         String mensaje = "[?] QUEDARA EN LA MISMA CELDA";
         Celda celB = aCeldas[celA.getFil()][celA.getCol()];
@@ -268,7 +266,7 @@ public class TableroGUI
             mensaje = "[!] PERDIO SU PROXIMO TURNO";
         }
         tur.setCelda(celB);
-        mostrarMensaje(info + "\n" + mensaje, "POR CELDA ESPECIAL", tur);
+        mostrarMensaje(mensaje, "POR CELDA ESPECIAL", tur);
         return celB;
     }
 
@@ -278,7 +276,7 @@ public class TableroGUI
         JLabel1 lColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
         JTextArea1 taResultado = new JTextArea1(false, 200, 40);
 
-        lColor.setBackground(tur.getColor());
+        lColor.backgroundSettings(tur.getColor());
         taResultado.lineWrapSettings(true);
         taResultado.append(mensaje);
 

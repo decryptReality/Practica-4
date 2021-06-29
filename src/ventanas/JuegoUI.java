@@ -3,9 +3,17 @@ package ventanas;
 import jcomponents.*;
 import tablero.*;
 import tablero.celdas.*;
+
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+
 import esencial.Jugador;
 import instrumentos.Pieza;
 
@@ -16,7 +24,7 @@ public class JuegoUI
     static Tablero tablero = new Tablero();
 
     public static void main(String[] args) {
-        menu1();
+        agregarJugador();
     }
 
     static void menu1()
@@ -34,6 +42,7 @@ public class JuegoUI
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
+
                 }
             }
         );
@@ -52,6 +61,49 @@ public class JuegoUI
         dMenu.locationSettings();
     } 
 
+    static void agregarJugador()
+    {    
+        JLabel1 lID = new JLabel1("ID", SwingConstants.LEFT, 70, 26);
+        JTextField1 tfID = new JTextField1(180, 26);
+        JLabel1 lNombre = new JLabel1("NOMBRE", SwingConstants.LEFT, 70, 26);
+        JTextField1 tfNombre = new JTextField1(180, 26);
+        JLabel1 lApellido = new JLabel1("APELLIDO", SwingConstants.LEFT, 70, 26);
+        JTextField1 tfApellido = new JTextField1(180, 26);
+        JButton1 bGuardar = new JButton1("GUARDAR", 140, 26);
+        
+        bGuardar.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent ae) 
+            {
+                try 
+                {
+                    int id = Integer.parseInt(tfID.getText().trim());
+                    String nombre = tfNombre.getText();
+                    String apellido = tfApellido.getText();
+                    vJugadores.add(new Jugador(id, nombre, apellido, 0, 0, 0));
+                    elegirJugadores();
+                } 
+                catch (Exception e) 
+                {
+                    System.out.println("[!] ID incorrecto");
+                }
+            }
+        });
+
+        JDialog1 dialog = new JDialog1("AGREGAR JUGADOR", (JDialog1) null, false);
+        dialog.add(lID);
+        dialog.add(tfID);
+        dialog.add(lNombre);
+        dialog.add(tfNombre);
+        dialog.add(lApellido);
+        dialog.add(tfApellido);
+        dialog.add(bGuardar);
+
+        dialog.sizeSettings(true, 310, 170);
+        dialog.locationSettings();
+    }
+    
     static void menuJugadores()
     {
         JTextArea1 taIns = new JTextArea1(false, 280, 50);
@@ -222,7 +274,32 @@ public class JuegoUI
 
     static void elegirJugadores()
     {
+        JLabel1 label = new JLabel1("ID-JUGADAS.GANADAS.PERDIDAS-NOMBRE.APELLIDO", SwingConstants.CENTER, 300, 26);
+        JList lista = new JList<>(vJugadores);
+        lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        JScrollPane spLista = new JScrollPane(lista);
+        spLista.setPreferredSize(new Dimension(340, 200));
+
+        JButton1 bElegir = new JButton1("ELEGIR", 140, 26);
+
+        bElegir.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    bElegir.setEnabled(false);
+                    lista.getSelectedValuesList();
+                }
+            }
+        );
         
+        JDialog1 dialog = new JDialog1("ELEGIR JUGADORES", (JDialog1) null, false);
+        dialog.add(label);
+        dialog.add(spLista);
+        dialog.add(bElegir);
+        dialog.sizeSettings(true, 400, 310);
+        dialog.locationSettings();
     }
 
     static void iniciarPartida()

@@ -53,6 +53,6 @@ public class Jugador implements Serializable
     @Override
     public String toString() 
     {
-        return id + "-" + jugadas + "." + "." + ganadas + "." + perdidas + "-" + nombre + "." + apellido;
+        return id + "-" + jugadas + "." + ganadas + "." + perdidas + "-" + nombre + "." + apellido;
     }
 }

@@ -10,20 +10,15 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-
-import esencial.Jugador;
-import esencial.Turno;
+import javax.swing.*;
+import esencial.*;
 import instrumentos.Pieza;
 
 public class JuegoUI 
 {
-    static Vector<Jugador> vJugadores = new Vector<>();
-    static JFileChooser1 fc = new JFileChooser1();
-    static Tablero tablero = new Tablero();
+    private static Vector<Jugador> vJugadores = new Vector<>();
+    private static JFileChooser1 fc = new JFileChooser1();
+    private static Tablero tablero = new Tablero();
 
     public static void main(String[] args) {
         menu1();
@@ -175,6 +170,8 @@ public class JuegoUI
                     bElegir.setEnabled(false);
                     // limpiar turnos para agregar otro conjunto de turnos
                     alTurnos.clear();
+                    // limpiar celdas de configuracion anterior
+                    tablero.clearCeldas();
 
                     // extraer jugadores seleccionados
                     List<Jugador> sels = lista.getSelectedValuesList();
@@ -306,7 +303,7 @@ public class JuegoUI
     static ArrayList<Turno> alTurnos = new ArrayList<>();
     static void iniciarPartida()
     {
-        TableroGUI partida = new TableroGUI(tablero, alTurnos);
+        TableroUI partida = new TableroUI(tablero, alTurnos);
         partida.crearUI();
         partida.turnar();
     }
@@ -438,7 +435,7 @@ public class JuegoUI
         }
     }
 
-    static Pieza[] aPiezas = 
+    private static Pieza[] aPiezas = 
     {
         new Pieza("tablero(", 2), 
         new Pieza("pierdeturno(", 2), 

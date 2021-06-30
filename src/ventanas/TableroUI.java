@@ -1,4 +1,4 @@
-package tablero;
+package ventanas;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,19 +8,21 @@ import javax.swing.SwingConstants;
 
 import esencial.Turno;
 import jcomponents.*;
+import tablero.Celda;
+import tablero.Tablero;
 import tablero.celdas.*;
 import instrumentos.*;
 
-public class TableroGUI 
+public class TableroUI 
 {
-    Celda[][] aCeldas;
-    JButton1[][] aBotones;
-    ArrayList<Turno> alTurnos;
-    int fils;
-    int cols;
+    private Celda[][] aCeldas;
+    private JButton1[][] aBotones;
+    private ArrayList<Turno> alTurnos;
+    private int fils;
+    private int cols;
 
     // R E V I S A D O
-    public TableroGUI(Tablero tab, ArrayList<Turno> alTurnos)
+    public TableroUI(Tablero tab, ArrayList<Turno> alTurnos)
     {
         fils = tab.getFils();
         cols = tab.getCols();
@@ -69,7 +71,7 @@ public class TableroGUI
         JDialog1 fGrid = new JDialog1("PARTIDA", (JDialog1) null, false);
         fGrid.add(pGrid);
         fGrid.sizeSettings(true);
-        fGrid.locationSettings();
+        fGrid.locationSettings(0, 0);
     }
 
     // REVISADO, CON DUDAS
@@ -99,7 +101,7 @@ public class TableroGUI
             // mostramos el resultado de los dados
             int cels1 = Extras.dado(1, 6);
             int cels2 = Extras.dado(1, 6);
-            mensajeDados(cels1, cels2, tur);
+            dadosUI(cels1, cels2, tur);
             if(cels1 + cels2 < faltante(tur.getCelda()))
             {
                 // des-tino de ficha despues de tirar dados
@@ -122,7 +124,7 @@ public class TableroGUI
             else
             {
                 String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
-                mostrarMensaje("[?] EL GANADOR ES " + info, "HA LLEGADO A LA CELDA FINAL", tur);   
+                mensajeUI("[?] EL GANADOR ES " + info, "HA LLEGADO A LA CELDA FINAL", tur);   
                 for(Turno turn : alTurnos)
                 {
                     if(!turn.getGanoPartida())
@@ -150,7 +152,7 @@ public class TableroGUI
         // si condicion es repetir turno, volver a tirar dados
     }
 
-    void mensajeDados(int cels1, int cels2, Turno tur)
+    void dadosUI(int cels1, int cels2, Turno tur)
     {
         String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
         JLabel1 lColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
@@ -187,7 +189,7 @@ public class TableroGUI
         dDado.add(bDado2);
         dDado.add(taResultado);
         dDado.sizeSettings(true, 240, 140);
-        dDado.locationSettings();
+        dDado.locationSettings(120, 0);
     }
 
     int faltante(Celda cel)
@@ -229,7 +231,7 @@ public class TableroGUI
 
     Celda destino2(Celda celA, Turno tur)
     {
-        mostrarMensaje("LLEGO A " + celA.toString(), "POR DADOS", tur);
+        mensajeUI("LLEGO A " + celA.toString(), "POR DADOS", tur);
         // mostrar mensaje segun celda especial
         String mensaje = "[?] QUEDARA EN LA MISMA CELDA";
         Celda celB = aCeldas[celA.getFil()][celA.getCol()];
@@ -266,11 +268,11 @@ public class TableroGUI
             mensaje = "[!] PERDIO SU PROXIMO TURNO";
         }
         tur.setCelda(celB);
-        mostrarMensaje(mensaje, "POR CELDA ESPECIAL", tur);
+        mensajeUI(mensaje, "POR CELDA ESPECIAL", tur);
         return celB;
     }
 
-    void mostrarMensaje(String mensaje, String title, Turno tur)
+    void mensajeUI(String mensaje, String title, Turno tur)
     {
         String info = tur.getJugador().getNombre() + " " + tur.getJugador().getApellido();
         JLabel1 lColor = new JLabel1("[?] " + info, SwingConstants.CENTER, 200, 26);
@@ -285,7 +287,7 @@ public class TableroGUI
         dDado.add(taResultado);
 
         dDado.sizeSettings(true, 240, 150);
-        dDado.locationSettings();
+        dDado.locationSettings(0, 120);
     }
 
     void cambiarColor(Celda cel, Color bg)

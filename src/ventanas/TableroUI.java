@@ -189,7 +189,7 @@ public class TableroUI
         dDado.add(bDado2);
         dDado.add(taResultado);
         dDado.sizeSettings(true, 240, 140);
-        dDado.locationSettings(120, 0);
+        dDado.locationSettings();
     }
 
     int faltante(Celda cel)
@@ -287,7 +287,7 @@ public class TableroUI
         dDado.add(taResultado);
 
         dDado.sizeSettings(true, 240, 150);
-        dDado.locationSettings(0, 120);
+        dDado.locationSettings();
     }
 
     void cambiarColor(Celda cel, Color bg)
